@@ -1,0 +1,49 @@
+{
+  "name": "movoin/oneframework",
+  "description": "Just one framework.",
+  "type": "library",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/movoin/oneframework",
+  "authors": [
+    {
+      "name": "Allen Luo",
+      "email": "movoin@gmail.com",
+      "homepage": "https://github.com/movoin"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "One\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "One\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^7.0",
+    "ext-json": "*",
+    "ext-swoole": ">=4.2.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "phpstan/phpstan": "^0.12.9",
+    "phpunit/phpunit": "^7.5"
+  },
+  "scripts": {
+    "test": [
+      "phpstan analyze src",
+      "phpunit -c ./phpunit.xml"
+    ],
+    "phpunit": "phpunit -c ./phpunit.xml"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "secure-http": false
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
