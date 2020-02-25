@@ -15,6 +15,7 @@ namespace One\Utility\Helper;
 
 use Closure;
 use stdClass;
+use One\Utility\Assert;
 use One\Collection\Contract\Arrayable;
 
 /**
@@ -79,7 +80,7 @@ class ArrayHelper
      */
     public static function has(array $array, $key): bool
     {
-        if ($array === [] || null === $key) {
+        if ($array === [] || is_null($key)) {
             return false;
         }
 
@@ -87,15 +88,19 @@ class ArrayHelper
             return true;
         }
 
-        foreach (explode('.', $key) as $segment) {
-            if (is_array($array) && array_key_exists($segment, $array)) {
-                $array = $array[$segment];
-            } else {
-                return false;
+        if (Assert::string($key)) {
+            foreach (explode('.', (string) $key) as $segment) {
+                if (is_array($array) && array_key_exists($segment, $array)) {
+                    $array = $array[$segment];
+                } else {
+                    return false;
+                }
             }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -156,7 +161,7 @@ class ArrayHelper
      */
     public static function get(array $array, $key, $default = null)
     {
-        if ($array === [] || $key === null) {
+        if ($array === [] || is_null($key)) {
             return $default;
         }
 
@@ -296,7 +301,7 @@ class ArrayHelper
      */
     public static function getColumn(array $array, ...$keys): array
     {
-        if ($array === [] || (count($keys) === 1 && $keys[0] === null)) {
+        if ($array === [] || (count($keys) === 1 && is_null($keys[0]))) {
             return [];
         }
 
@@ -480,7 +485,7 @@ class ArrayHelper
      */
     public static function set(array &$array, $key, $value): array
     {
-        if (null === $key) {
+        if (is_null($key)) {
             return $array = static::wrap($value);
         }
 
@@ -581,7 +586,7 @@ class ArrayHelper
      */
     public static function remove(array &$array, $key, $default = null)
     {
-        if ($array === [] || $key === null) {
+        if ($array === [] || is_null($key)) {
             return $default;
         }
 
@@ -697,7 +702,7 @@ class ArrayHelper
      */
     public static function wrap($value): array
     {
-        if ($value === null) {
+        if (is_null($value)) {
             return [];
         }
 

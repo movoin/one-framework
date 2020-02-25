@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": [
-      "phpstan analyze src",
+      "phpstan analyze src --level max",
       "phpunit -c ./phpunit.xml"
     ],
     "phpunit": "phpunit -c ./phpunit.xml"

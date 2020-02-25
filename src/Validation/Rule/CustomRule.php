@@ -38,11 +38,11 @@ final class CustomRule extends AbstractRule
      * 从数组回调创建自定义规则
      *
      * @param \One\Validation\Validator $validator
-     * @param array $callback
+     * @param mixed $callback
      *
      * @return self
      */
-    public static function createFromArray(Validator $validator, array $callback): self
+    public static function createFromArray(Validator $validator, $callback): self
     {
         $self = new static($validator);
         $self->callback = function (array $attributes, string $name, array $parameters) use ($callback) {

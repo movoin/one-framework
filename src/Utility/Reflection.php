@@ -22,12 +22,12 @@ class Reflection
      *
      * @static
      *
-     * @param string $abstract
+     * @param mixed $abstract
      * @param array $args
      *
      * @return object
      */
-    public static function newInstance(string $abstract, array $args = []): object
+    public static function newInstance($abstract, array $args = []): object
     {
         return (new ReflectionClass($abstract))->newInstanceArgs($args);
     }
