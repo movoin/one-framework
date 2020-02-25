@@ -1,9 +1,9 @@
 {
-  "name": "movoin/oneframework",
+  "name": "movoin/one-framework",
   "description": "Just one framework.",
   "type": "library",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/movoin/oneframework",
+  "homepage": "https://github.com/movoin/one-framework",
   "authors": [
     {
       "name": "Allen Luo",
