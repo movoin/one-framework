@@ -267,6 +267,7 @@ class ArrayHelperTest extends \PHPUnit\Framework\TestCase
             [$array, 'bar.foo', true],
             [$array, '0.1.2', true],
             [$array, 0, true],
+            [$array, 1, false],
         ];
     }
 

@@ -55,4 +55,19 @@ class JsonHelperTest extends \PHPUnit\Framework\TestCase
     {
         JsonHelper::decode("{'foo': 'bar'}");
     }
+
+    public function testReadFile()
+    {
+        $array = ['foo' => 'bar'];
+
+        $this->assertEquals(JsonHelper::readFile(__DIR__ . '/Fixtures/test.json'), $array);
+    }
+
+    /**
+     * @expectedException One\Utility\Exception\JsonException
+     */
+    public function testReadFileException()
+    {
+        JsonHelper::readFile("path/to/file");
+    }
 }

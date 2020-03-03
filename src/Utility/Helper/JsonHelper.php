@@ -32,6 +32,7 @@ class JsonHelper
      * @param int $depth
      *
      * @return string
+     * @throws \One\Utility\Exception\JsonException
      */
     public static function encode(
         $value,
@@ -59,6 +60,7 @@ class JsonHelper
      * @param int $options
      *
      * @return mixed
+     * @throws \One\Utility\Exception\JsonException
      */
     public static function decode(
         string $json,
@@ -84,6 +86,7 @@ class JsonHelper
      * @param int $options
      *
      * @return mixed
+     * @throws \One\Utility\Exception\JsonException
      */
     public static function readFile(
         string $filepath,
@@ -91,16 +94,12 @@ class JsonHelper
         int $depth = 512,
         int $options = JSON_BIGINT_AS_STRING
     ) {
-        try {
-            if (file_exists($filepath)) {
-                $json = file_get_contents($filepath);
-            } else {
-                throw new JsonException("未找到文件：$filepath");
-            }
-        } catch (Exception $e) {
-            throw new JsonException($e->getMessage(), $e->getCode());
+        if (file_exists($filepath)) {
+            $json = file_get_contents($filepath);
+
+            return static::decode($json, $assoc, $depth, $options);
         }
 
-        return static::decode($json, $assoc, $depth, $options);
+        throw new JsonException("未找到文件：$filepath");
     }
 }
