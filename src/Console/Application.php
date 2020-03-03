@@ -33,13 +33,6 @@ class Application extends SymfonyApplication
     const RELEASE_DATE = '';
 
     /**
-     * 初始化目录位置
-     *
-     * @var string
-     */
-    private $initialWorkingDirectory = '';
-
-    /**
      * LOGO
      *
      * @var string
@@ -59,7 +52,6 @@ class Application extends SymfonyApplication
         parent::__construct('One Console Tool', Application::VERSION);
 
         $this->setDispatcher(new EventDispatcher);
-        $this->initialWorkingDirectory = getcwd();
     }
 
     /**
