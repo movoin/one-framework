@@ -19,10 +19,6 @@ use One\Validation\Rule\AbstractRule;
 /**
  * 规则：自定义
  *
- * @method static createFromArray(Validator $validator, array $callback)
- * @method static createFromClosure(Validator $validator, callable $callback)
- * @method bool   validate(array $attributes, string $name, array $parameters = [])
- *
  * @final
  */
 final class CustomRule extends AbstractRule

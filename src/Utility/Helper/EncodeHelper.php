@@ -18,13 +18,6 @@ use One\Utility\Exception\EncodeException;
 /**
  * 编码助手类
  *
- * @method string      encodeBase62($data)
- * @method string|int  decodeBase62(string $data, int $type = EncodeHelper::TYPE_STRING)
- * @method string      encodeBase62String(string $data)
- * @method string      decodeBase62String(string $data)
- * @method string      encodeBase62Integer(int $data)
- * @method int         decodeBase62Integer(string $data)
- *
  * @static
  */
 class EncodeHelper

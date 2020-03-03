@@ -18,9 +18,6 @@ use One\Utility\Exception\JsonException;
 /**
  * JSON 助手类
  *
- * @method string encode($value, int $options, int $depth = 512)
- * @method string decode(string $json, bool $assoc = true, int $depth = 512, int $options)
- *
  * @static
  */
 class JsonHelper

@@ -28,7 +28,6 @@
     "php": "^7.0",
     "ext-json": "*",
     "ext-swoole": ">=4.2.0",
-    "seld/jsonlint": "^1.7",
     "symfony/console": "^5.0",
     "symfony/event-dispatcher": "^5.0",
     "symfony/process": "^5.0"
@@ -43,7 +42,8 @@
       "phpstan analyze src --level max",
       "phpunit -c ./phpunit.xml"
     ],
-    "phpunit": "phpunit -c ./phpunit.xml"
+    "phpunit": "phpunit -c ./phpunit.xml",
+    "api-docs": "sami update ./sami.php"
   },
   "config": {
     "preferred-install": "dist",

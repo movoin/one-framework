@@ -20,9 +20,6 @@ use One\Validation\Contract\Rule;
 /**
  * 校验规则抽象类
  *
- * @method array getNames()
- * @method bool  validate(array $attributes, string $name, array $parameters = [])
- *
  * @abstract
  * @since 0.2
  */

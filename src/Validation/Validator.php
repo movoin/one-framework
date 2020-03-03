@@ -22,17 +22,6 @@ use One\Validation\Rule\CustomRule;
 /**
  * 数据规则校验器
  *
- * @method void     setScenario(string $scenario)
- * @method bool     validate(array $attributes)
- * @method bool     validateValue(array $attributes, array $names, array $rule)
- * @method bool     hasRule(string $name)
- * @method void     addRule(string $name, $rule)
- * @method Rule     getRuleInstance(string $name)
- * @method array    getErrors()
- * @method string   getLastError()
- * @method void     addError(string $error)
- * @method void     reset()
- *
  * @since 0.2
  */
 class Validator

@@ -25,32 +25,6 @@ use One\Utility\Helper\JsonHelper;
 /**
  * 数据集合类
  *
- * @method bool has(string $key)
- * @method self set(string $key, $value)
- * @method mixed get(string $key, $default = null)
- * @method array all()
- * @method self only(array ...$keys)
- * @method self take(int $limit)
- * @method mixed when($value, callable $callback, callable $default = null)
- * @method mixed whenEmpty(callable $callback, callable $default = null)
- * @method mixed whenNotEmpty(callable $callback, callable $default = null)
- * @method self filter(callable $callback = null)
- * @method self map(callable $callback)
- * @method self each(callable $callback)
- * @method self flip()
- * @method self keys()
- * @method self merge($items)
- * @method self diff($items)
- * @method self intersect($items)
- * @method self remove(...$keys)
- * @method mixed pop()
- * @method mixed shift()
- * @method bool isEmpty()
- * @method bool isNotEmpty()
- * @method int count()
- * @method array toArray()
- * @method string toJson()
- *
  * @since 0.2
  */
 class Collection implements ArrayAccess, Countable, IteratorAggregate, Arrayable, Jsonable

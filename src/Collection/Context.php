@@ -16,12 +16,7 @@ namespace One\Collection;
 /**
  * 上下文容器
  *
- * @method bool  has(string $key)
- * @method array all()
- * @method mixed get(string $key, $default = null, ?string $class = null)
- * @method void  set(string $key, $value)
- * @method void  setMulti(array $items)
- * @method void  unset(string $key)
+ * @since 0.2
  */
 class Context
 {

@@ -21,22 +21,6 @@ use One\Collection\Contract\Arrayable;
 /**
  * 数组助手类
  *
- * @method bool  has(array $array, $key)
- * @method mixed get(array $array, $key, $default = null)
- * @method array where(array $array, callable $callback)
- * @method array only(array $array, array $keys)
- * @method array getColumn(array $array, ...$keys)
- * @method array map(array $array, $from, $to, $group = null)
- * @method array group(array $array, $group)
- * @method array set(array &$array, $key, $value)
- * @method void  insert(array &$array, int $index, ...$insert)
- * @method mixed remove(array &$array, $key, $default = null)
- * @method array merge(array $array, array ...$arrays)
- * @method array wrap($value)
- * @method bool  isAssociative(array $array)
- * @method bool  isIndexed(array $array)
- * @method array toArray($object, $recursive = true)
- *
  * @static
  */
 class ArrayHelper

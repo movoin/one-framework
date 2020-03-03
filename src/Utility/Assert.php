@@ -20,35 +20,6 @@ use Traversable;
 /**
  * 断言助手类
  *
- * @method bool string($value)
- * @method bool stringNotEmpty($value)
- * @method bool integer($value)
- * @method bool float($value)
- * @method bool numeric($value)
- * @method bool number($value)
- * @method bool natural($value)
- * @method bool boolean($value)
- * @method bool object($value)
- * @method bool datetime($value)
- * @method bool resource($value, $type = null)
- * @method bool callable($value)
- * @method bool array($value)
- * @method bool countable($value)
- * @method bool iterable($value)
- * @method bool instanceOf($value, $class)
- * @method bool instanceOfAny($value, array $classes)
- * @method bool namespace($value)
- * @method bool range($value, $min, $max)
- * @method bool oneOf($value, array $values)
- * @method bool contains($value, $needle)
- * @method bool startsWith(string $haystack, $needles)
- * @method bool ip($value)
- * @method bool email($value, $domains = null)
- * @method bool mobile($value)
- * @method bool phone($value)
- * @method bool url($value)
- * @method bool json($value)
- *
  * @static
  */
 class Assert
