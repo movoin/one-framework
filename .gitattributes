@@ -1,12 +1,17 @@
 # EXPORT-IGNORE
 
+/.composer          export-ignore
+/.editorconfig      export-ignore
 /.gitattributes     export-ignore
 /.gitignore         export-ignore
-/.editorconfig      export-ignore
+/composer.lock      export-ignore
 /Dockerfile         export-ignore
-/phpunit.xml        export-ignore
-/Makefile           export-ignore
 /dockerfiles        export-ignore
-/tests              export-ignore
-/example            export-ignore
 /docs               export-ignore
+/example            export-ignore
+/Makefile           export-ignore
+/phpcs.xml          export-ignore
+/phpstan.neon       export-ignore
+/phpunit.xml        export-ignore
+/sami.php           export-ignore
+/tests              export-ignore
