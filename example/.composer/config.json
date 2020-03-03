@@ -1,0 +1,15 @@
+{
+  "config": {
+    "preferred-install": "dist",
+    "secure-http": false
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    },
+    {
+      "packagist": false
+    }
+  ]
+}

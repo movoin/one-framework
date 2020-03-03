@@ -83,8 +83,8 @@ GitHub.sublime-settings
 .bash_history
 
 ### Example ###
-/example/runtime/local/*
-/example/runtime/log/*
-/example/runtime/var/*
+/example/local/*
+/example/log/*
+/example/var/*
 
 # End of https://www.gitignore.io/api/macos,composer,sublimetext,visualstudiocode

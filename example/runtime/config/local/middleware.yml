@@ -1,0 +1,18 @@
+---
+#
+# 中间件配置
+#
+
+#
+# 分组
+#
+# group:
+#   global:
+#     - App\Middleware\AccessTokenMiddleware
+
+#
+# 匹配规则
+#
+# match:
+#   '*': global
+#   '/hello': App\Domain\Acme\Middleware\HelloMiddleware

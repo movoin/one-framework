@@ -1,0 +1,15 @@
+---
+#
+# 应用配置
+#
+
+# 应用名称
+name: one
+# 应用版本
+version: 0.1
+# 更新版本
+stripe_version: "2020-03-03 10:42:18"
+# PHP Bin 路径
+php_bin: "/usr/local/bin/php"
+# One Bin 路径
+one_bin: "{ROOT_PATH}/bin/one"

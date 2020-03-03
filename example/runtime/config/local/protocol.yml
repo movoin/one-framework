@@ -1,0 +1,10 @@
+---
+#
+# 协议配置
+#
+
+# api:
+#   listen: 127.0.0.1:9501
+#   protocol: http
+#   swoole:
+#     ...

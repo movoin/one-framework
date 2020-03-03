@@ -77,4 +77,33 @@ class JsonHelper
 
         return $data;
     }
+
+    /**
+     * 读取并解码 JSON 文件
+     *
+     * @param string $filepath
+     * @param bool $assoc
+     * @param int $depth
+     * @param int $options
+     *
+     * @return mixed
+     */
+    public static function readFile(
+        string $filepath,
+        bool $assoc = true,
+        int $depth = 512,
+        int $options = JSON_BIGINT_AS_STRING
+    ) {
+        try {
+            if (file_exists($filepath)) {
+                $json = file_get_contents($filepath);
+            } else {
+                throw new JsonException("未找到文件：$filepath");
+            }
+        } catch (Exception $e) {
+            throw new JsonException($e->getMessage(), $e->getCode());
+        }
+
+        return static::decode($json, $assoc, $depth, $options);
+    }
 }
