@@ -44,7 +44,6 @@ class Container
      */
     private $objects = [];
 
-
     /**
      * 判断是否存在指定对象
      *

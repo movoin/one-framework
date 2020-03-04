@@ -20,4 +20,10 @@ namespace One\Utility\Helper;
  */
 class DateHelper
 {
+    /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
 }

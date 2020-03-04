@@ -26,6 +26,13 @@ use One\Collection\Contract\Arrayable;
 class ArrayHelper
 {
     /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * 判断数组中是否存在指定键名
      *
      * 示例：

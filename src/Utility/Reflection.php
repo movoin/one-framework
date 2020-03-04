@@ -21,6 +21,13 @@ use ReflectionClass;
 class Reflection
 {
     /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * 创建实例
      *
      * @static

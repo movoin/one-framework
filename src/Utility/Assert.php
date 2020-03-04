@@ -25,6 +25,13 @@ use Traversable;
 class Assert
 {
     /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * 判断是否字符串
      *
      * @param  mixed $value

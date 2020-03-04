@@ -20,8 +20,8 @@ class ReflectionTest extends \PHPUnit\Framework\TestCase
     public function testNewInstance()
     {
         $this->assertInstanceOf(
-            '\\One\\Utility\\Reflection',
-            Reflection::newInstance(Reflection::class)
+            '\\stdClass',
+            Reflection::newInstance(\stdClass::class)
         );
     }
 }

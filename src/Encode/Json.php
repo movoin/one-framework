@@ -23,6 +23,13 @@ use One\Encode\Exception\EncodeException;
 class Json
 {
     /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * 对变量进行 JSON 编码
      *
      * @static

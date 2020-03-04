@@ -805,6 +805,13 @@ class MimeTypeExtension
     protected static $defaultMimeTypes = [];
 
     /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
+    /**
      * 获得文件扩展名
      *
      * @static
