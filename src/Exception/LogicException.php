@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace One\Exception;
 
+/**
+ * 逻辑异常类
+ *
+ * @since 0.2
+ */
 class LogicException extends \LogicException
 {
 }

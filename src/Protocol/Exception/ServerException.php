@@ -16,7 +16,9 @@ namespace One\Protocol\Exception;
 use One\Exception\RuntimeException;
 
 /**
- * 服务器异常
+ * 服务器异常类
+ *
+ * @since 0.2
  */
 class ServerException extends RuntimeException
 {

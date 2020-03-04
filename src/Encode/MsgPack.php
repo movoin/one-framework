@@ -21,6 +21,11 @@ use MessagePack\Exception\PackingFailedException;
 use MessagePack\Exception\UnpackingFailedException;
 use One\Encode\Exception\EncodeException;
 
+/**
+ * MessagePack 编码类
+ *
+ * @since 0.2
+ */
 class MsgPack
 {
     /**

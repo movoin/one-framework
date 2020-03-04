@@ -15,6 +15,8 @@ namespace One\Protocol\Contract;
 
 /**
  * 服务器接口
+ *
+ * @since 0.2
  */
 interface Server
 {

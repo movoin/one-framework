@@ -12,6 +12,11 @@
 
 namespace One\Collection\Contract;
 
+/**
+ * Json 类型接口
+ *
+ * @since 0.2
+ */
 interface Jsonable
 {
     /**

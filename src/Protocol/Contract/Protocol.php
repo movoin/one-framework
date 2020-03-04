@@ -15,6 +15,8 @@ namespace One\Protocol\Contract;
 
 /**
  * 协议接口
+ *
+ * @since 0.2
  */
 interface Protocol
 {

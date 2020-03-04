@@ -21,6 +21,7 @@ use Traversable;
  * 断言助手类
  *
  * @static
+ * @since 0.2
  */
 class Assert
 {

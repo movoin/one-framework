@@ -22,6 +22,7 @@ use One\Collection\Contract\Arrayable;
  * 数组助手类
  *
  * @static
+ * @since 0.2
  */
 class ArrayHelper
 {

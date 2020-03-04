@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace One\Validation\Contract;
 
+/**
+ * 校验规则接口
+ *
+ * @since 0.2
+ */
 interface Rule
 {
     /**

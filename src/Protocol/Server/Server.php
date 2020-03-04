@@ -18,6 +18,9 @@ use One\Protocol\Contract\Server as ServerInterface;
 
 /**
  * 服务器抽象类
+ *
+ * @abstract
+ * @since 0.2
  */
 abstract class Server implements ServerInterface
 {

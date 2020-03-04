@@ -12,6 +12,11 @@
 
 namespace One\Collection\Contract;
 
+/**
+ * 数组类型接口
+ *
+ * @since 0.2
+ */
 interface Arrayable
 {
     /**

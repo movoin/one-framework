@@ -16,7 +16,10 @@ namespace One\Utility;
 use ReflectionClass;
 
 /**
- * 反射助手
+ * 反射助手类
+ *
+ * @static
+ * @since 0.2
  */
 class Reflection
 {

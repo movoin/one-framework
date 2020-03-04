@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace One\Protocol\Exception;
 
 /**
- * 协议异常
+ * 协议异常类
+ *
+ * @since 0.2
  */
 class ProtocolException extends ServerException
 {

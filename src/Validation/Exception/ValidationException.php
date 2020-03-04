@@ -15,6 +15,11 @@ namespace One\Validation\Exception;
 
 use One\Exception\RuntimeException;
 
+/**
+ * 数据校验异常类
+ *
+ * @since 0.2
+ */
 class ValidationException extends RuntimeException
 {
 }

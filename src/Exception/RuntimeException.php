@@ -12,6 +12,11 @@
 
 namespace One\Exception;
 
+/**
+ * 运行时异常类
+ *
+ * @since 0.2
+ */
 class RuntimeException extends \RuntimeException
 {
 }

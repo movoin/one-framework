@@ -12,6 +12,11 @@
 
 namespace One\Exception;
 
+/**
+ * 容器异常类
+ *
+ * @since 0.2
+ */
 class ContainerException extends RuntimeException
 {
 }

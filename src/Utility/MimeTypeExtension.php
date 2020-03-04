@@ -15,6 +15,9 @@ namespace One\Utility;
 
 /**
  * 媒体类型映射
+ *
+ * @static
+ * @since 0.2
  */
 class MimeTypeExtension
 {
