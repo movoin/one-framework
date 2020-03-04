@@ -6,21 +6,21 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Utility\Helper
+ * @package     One\Encode
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Utility\Helper;
+namespace One\Encode;
 
-use One\Utility\Exception\JsonException;
+use One\Encode\Exception\EncodeException;
 
 /**
- * JSON 助手类
+ * Json 编码类
  *
- * @static
+ * @since 0.2
  */
-class JsonHelper
+class Json
 {
     /**
      * 对变量进行 JSON 编码
@@ -32,7 +32,7 @@ class JsonHelper
      * @param int $depth
      *
      * @return string
-     * @throws \One\Utility\Exception\JsonException
+     * @throws \One\Encode\Exception\EncodeException
      */
     public static function encode(
         $value,
@@ -43,7 +43,7 @@ class JsonHelper
         $json = json_encode($value, $options, $depth);
 
         if (JSON_ERROR_NONE !== ($error = json_last_error())) {
-            throw new JsonException(json_last_error_msg(), $error);
+            throw new EncodeException('Json', json_last_error_msg(), $error);
         }
 
         return $json;
@@ -60,7 +60,7 @@ class JsonHelper
      * @param int $options
      *
      * @return mixed
-     * @throws \One\Utility\Exception\JsonException
+     * @throws \One\Encode\Exception\EncodeException
      */
     public static function decode(
         string $json,
@@ -71,7 +71,7 @@ class JsonHelper
         $data = json_decode($json, $assoc, $depth, $options);
 
         if (JSON_ERROR_NONE !== ($error = json_last_error())) {
-            throw new JsonException(json_last_error_msg(), $error);
+            throw new EncodeException('Json', json_last_error_msg(), $error);
         }
 
         return $data;
@@ -86,7 +86,7 @@ class JsonHelper
      * @param int $options
      *
      * @return mixed
-     * @throws \One\Utility\Exception\JsonException
+     * @throws \One\Encode\Exception\EncodeException
      */
     public static function readFile(
         string $filepath,
@@ -100,6 +100,6 @@ class JsonHelper
             return static::decode($json, $assoc, $depth, $options);
         }
 
-        throw new JsonException("未找到文件：$filepath");
+        throw new EncodeException('Json', "未找到文件：$filepath");
     }
 }

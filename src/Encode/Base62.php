@@ -6,21 +6,21 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Utility\Helper
+ * @package     One\Encode
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Utility\Helper;
+namespace One\Encode;
 
-use One\Utility\Exception\EncodeException;
+use One\Encode\Exception\EncodeException;
 
 /**
- * 编码助手类
+ * Base62 编码类
  *
- * @static
+ * @since 0.2
  */
-class EncodeHelper
+class Base62
 {
     const TYPE_INT = 0;
     const TYPE_STRING = 1;
@@ -37,19 +37,19 @@ class EncodeHelper
      * @param string|int $data
      *
      * @return string
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
-    public static function encodeBase62($data): string
+    public static function encode($data): string
     {
         if (is_int($data)) {
-            return static::encodeBase62Integer($data);
+            return static::encodeInteger($data);
         }
 
         if (is_string($data)) {
-            return static::encodeBase62String($data);
+            return static::encodeString($data);
         }
 
-        throw new EncodeException('Base62 编码仅支持 `string` 和 `Integer` 类型的数据');
+        throw new EncodeException('Base62', '编码仅支持 `string` 和 `Integer` 类型的数据');
     }
     /**
      * 根据数据类型解码 Base62
@@ -57,22 +57,22 @@ class EncodeHelper
      * @static
      *
      * @param string $data
-     * @param int $type    TYPE_STRING, TYPE_INT
+     * @param int $type TYPE_STRING, TYPE_INT
      *
      * @return string|int
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
-    public static function decodeBase62(string $data, int $type = EncodeHelper::TYPE_STRING)
+    public static function decode(string $data, int $type = Base62::TYPE_STRING)
     {
         if ($type === static::TYPE_INT) {
-            return static::decodeBase62Integer($data);
+            return static::decodeInteger($data);
         }
 
         if ($type === static::TYPE_STRING) {
-            return static::decodeBase62String($data);
+            return static::decodeString($data);
         }
 
-        throw new EncodeException('Base62 解码仅支持 `string` 和 `Integer` 类型的数据');
+        throw new EncodeException('Base62', '编码仅支持 `string` 和 `Integer` 类型的数据');
     }
 
     /**
@@ -83,9 +83,9 @@ class EncodeHelper
      * @param string $data
      *
      * @return string
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
-    public static function encodeBase62String(string $data): string
+    public static function encodeString(string $data): string
     {
         static::checkGMP();
 
@@ -116,12 +116,12 @@ class EncodeHelper
      * @param string $data
      *
      * @return string
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
-    public static function decodeBase62String(string $data): string
+    public static function decodeString(string $data): string
     {
         static::checkGMP();
-        static::validateBase62($data);
+        static::validate($data);
 
         $leadZeroBytes = 0;
         while ('' !== $data && 0 === strpos($data, static::BASE62[0])) {
@@ -149,9 +149,9 @@ class EncodeHelper
      * @param int $data
      *
      * @return string
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
-    public static function encodeBase62Integer(int $data): string
+    public static function encodeInteger(int $data): string
     {
         static::checkGMP();
         return gmp_strval(gmp_init($data, 10), 62);
@@ -166,10 +166,10 @@ class EncodeHelper
      *
      * @return int
      */
-    public static function decodeBase62Integer(string $data): int
+    public static function decodeInteger(string $data): int
     {
         static::checkGMP();
-        static::validateBase62($data);
+        static::validate($data);
 
         $hex = gmp_strval(gmp_init($data, 62), 16);
         if (strlen($hex) % 2) {
@@ -185,13 +185,13 @@ class EncodeHelper
      * @static
      *
      * @return void
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
     private static function checkGMP(): void
     {
         if (! function_exists('gmp_init')) {
             // @codeCoverageIgnoreStart
-            throw new EncodeException('未检测到 GMP 扩展，可以通过添加 `--with-gmp` PHP 编译参数来开启扩展');
+            throw new EncodeException('Base62', '未检测到 GMP 扩展，可以通过添加 `--with-gmp` PHP 编译参数来开启扩展');
             // @codeCoverageIgnoreEnd
         }
     }
@@ -204,12 +204,12 @@ class EncodeHelper
      * @param string $data
      *
      * @return void
-     * @throws \One\Utility\Exception\EncodeException
+     * @throws \One\Encode\Exception\EncodeException
      */
-    private static function validateBase62(string $data): void
+    private static function validate(string $data): void
     {
         if (strlen($data) !== strspn($data, static::BASE62)) {
-            throw new EncodeException("数据包含无效字符");
+            throw new EncodeException('Base62', '数据包含无效字符');
         }
     }
 }

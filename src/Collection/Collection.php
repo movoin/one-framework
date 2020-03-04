@@ -19,8 +19,8 @@ use Countable;
 use IteratorAggregate;
 use One\Collection\Contract\Arrayable;
 use One\Collection\Contract\Jsonable;
+use One\Encode\Json;
 use One\Utility\Helper\ArrayHelper;
-use One\Utility\Helper\JsonHelper;
 
 /**
  * 数据集合类
@@ -332,7 +332,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, Arrayable
      */
     public function toJson(): string
     {
-        return JsonHelper::encode($this->items);
+        return Json::encode($this->items);
     }
 
     /**
