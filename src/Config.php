@@ -12,6 +12,14 @@
 
 namespace One;
 
+use One\Utility\Helper\ArrayHelper;
+use One\Utility\Helper\YamlHelper;
+
+/**
+ * 配置类
+ *
+ * @since 0.2
+ */
 class Config
 {
 }
