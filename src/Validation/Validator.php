@@ -220,10 +220,10 @@ class Validator
     public function addRule(string $name, $rule): void
     {
         if ($this->hasRule($name)) {
-            throw new ValidationException("规则：{$name} 已被定义");
+            throw new ValidationException($name, "规则已被定义");
         }
         if (! $this->isCustomRule($rule)) {
-            throw new ValidationException("规则必须可回调");
+            throw new ValidationException($name, "规则必须可回调");
         }
 
         $this->customRules[$name] = $rule;
@@ -259,7 +259,7 @@ class Validator
             }
         }
 
-        throw new ValidationException("校验规则：{$name} 未定义");
+        throw new ValidationException($name, "校验规则未定义");
     }
 
     /**

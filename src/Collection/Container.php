@@ -6,16 +6,16 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One
+ * @package     One\Collection
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One;
+namespace One\Collection;
 
 use Closure;
 use ReflectionException;
-use One\Exception\ContainerException;
+use One\Collection\Exception\ContainerException;
 use One\Utility\Reflection;
 
 /**
@@ -64,7 +64,7 @@ class Container
      * @param string $id
      *
      * @return object
-     * @throws \One\Exception\ContainerException
+     * @throws \One\Collection\Exception\ContainerException
      */
     public function get(string $id): object
     {
@@ -98,7 +98,7 @@ class Container
      * @param mixed $concrete
      *
      * @return void
-     * @throws \One\Exception\ContainerException
+     * @throws \One\Collection\Exception\ContainerException
      */
     public function bind(string $id, $concrete = null): void
     {
@@ -126,7 +126,7 @@ class Container
      * @param boolean $createNew
      *
      * @return object
-     * @throws \One\Exception\ContainerException
+     * @throws \One\Collection\Exception\ContainerException
      */
     public function make(string $id, array $parameters = [], bool $createNew = false): object
     {
@@ -152,7 +152,7 @@ class Container
      * @param array $parameters
      *
      * @return object
-     * @throws \One\Exception\ContainerException
+     * @throws \One\Collection\Exception\ContainerException
      */
     public function resolve($concrete, array $parameters = []): object
     {

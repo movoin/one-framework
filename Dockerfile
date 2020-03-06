@@ -5,7 +5,10 @@
 
 FROM movoin/one-project:swoole_only
 
-ENV ONE_ENV local
+ENV ONE_PROJECT one.framework
+
+# 运行模式：local, test, devel, deploy
+ENV ONE_MODE local
 
 WORKDIR /app/
 

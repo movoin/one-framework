@@ -6,12 +6,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Protocol\Server
+ * @package     One\Protocol
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Protocol\Server;
+namespace One\Protocol;
 
 use One\Protocol\Contract\Protocol as ProtocolInterface;
 use One\Protocol\Contract\Server as ServerInterface;

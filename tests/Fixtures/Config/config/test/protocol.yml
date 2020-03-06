@@ -13,3 +13,5 @@ http:
   home: "{APP_PATH}/Api"
   listen: 127.0.0.1:9501
   protocol: http
+  swoole:
+    daemonize: 0

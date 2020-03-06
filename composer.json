@@ -17,7 +17,10 @@
   "autoload": {
     "psr-4": {
       "One\\": "src/"
-    }
+    },
+    "files": [
+      "src/Functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
@@ -31,6 +34,7 @@
     "rybakit/msgpack": "^0.7.0",
     "symfony/console": "^5.0",
     "symfony/event-dispatcher": "^5.0",
+    "symfony/finder": "^5.0",
     "symfony/process": "^5.0",
     "symfony/yaml": "^5.0"
   },

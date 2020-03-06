@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace One\Validation\Exception;
 
+use Throwable;
 use One\Exception\RuntimeException;
 
 /**
@@ -22,4 +23,19 @@ use One\Exception\RuntimeException;
  */
 class ValidationException extends RuntimeException
 {
+    /**
+     * 构造
+     *
+     * @param string $rule
+     * @param string $message
+     * @param int $code
+     * @param \Throwable $previous
+     */
+    public function __construct(string $rule, string $message = '', int $code = 0, Throwable $previous = null)
+    {
+        $message = $message === '' ?? '%s 校验失败';
+        $message = strpos('%s', $message) === false ?? '校验规则 %s: ' . $message;
+
+        parent::__construct(sprintf($message, $rule), $code, $previous);
+    }
 }

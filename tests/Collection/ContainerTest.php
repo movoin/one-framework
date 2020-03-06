@@ -6,14 +6,14 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Tests
+ * @package     One\Tests\Collection
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Tests;
+namespace One\Tests\Collection;
 
-use One\Container;
+use One\Collection\Container;
 
 class ContainerTest extends \PHPUnit\Framework\TestCase
 {
@@ -60,7 +60,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Exception\ContainerException
+     * @expectedException One\Collection\Exception\ContainerException
      */
     public function testGetObjectException()
     {
@@ -68,7 +68,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Exception\ContainerException
+     * @expectedException One\Collection\Exception\ContainerException
      */
     public function testResolveException()
     {
