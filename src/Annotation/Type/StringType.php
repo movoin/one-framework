@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace One\Annotation\Type;
 
-use One\Annotation\Contract\Type;
+use One\Annotation\Contract\TypeInterface;
 use One\Annotation\Exception\ParseException;
 
 /**
@@ -21,7 +21,7 @@ use One\Annotation\Exception\ParseException;
  *
  * @since 0.2
  */
-class StringType implements Type
+class StringType implements TypeInterface
 {
     /**
      * 解析字符串类型

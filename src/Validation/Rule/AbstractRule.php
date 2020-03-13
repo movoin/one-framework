@@ -15,7 +15,7 @@ namespace One\Validation\Rule;
 
 use One\Utility\Assert;
 use One\Validation\Validator;
-use One\Validation\Contract\Rule;
+use One\Validation\Contract\RuleInterface;
 
 /**
  * 校验规则抽象类
@@ -23,7 +23,7 @@ use One\Validation\Contract\Rule;
  * @abstract
  * @since 0.2
  */
-abstract class AbstractRule implements Rule
+abstract class AbstractRule implements RuleInterface
 {
     /**
      * 是否忽略未定义字段，默认为 true

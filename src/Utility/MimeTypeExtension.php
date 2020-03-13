@@ -22,6 +22,11 @@ namespace One\Utility;
 class MimeTypeExtension
 {
     /**
+     * 默认媒体类型
+     */
+    const DEFAULT_MIMETYPE = 'text/plain';
+
+    /**
      * 媒体类型映射扩展名
      *
      * @var array
@@ -835,7 +840,7 @@ class MimeTypeExtension
      *
      * @param string $extension
      *
-     * @return string|null
+     * @return string
      */
     public static function getMimeType(string $extension): ?string
     {
@@ -843,6 +848,22 @@ class MimeTypeExtension
             static::$defaultMimeTypes = array_flip(static::$defaultExtensions);
         }
 
-        return isset(static::$defaultMimeTypes[$extension]) ? static::$defaultMimeTypes[$extension] : null;
+        return isset(static::$defaultMimeTypes[$extension]) ?
+            static::$defaultMimeTypes[$extension] :
+            static::DEFAULT_MIMETYPE;
+    }
+
+    /**
+     * 根据文件路径获得媒体类型
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function getMimeTypeByFilePath(string $path): ?string
+    {
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+        return empty($extension) ? static::DEFAULT_MIMETYPE : static::getMimeType($extension);
     }
 }

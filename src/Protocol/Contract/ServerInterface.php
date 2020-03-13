@@ -18,7 +18,7 @@ namespace One\Protocol\Contract;
  *
  * @since 0.2
  */
-interface Server
+interface ServerInterface
 {
     /**
      * 运行服务器

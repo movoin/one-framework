@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace One\Annotation\Type;
 
-use One\Annotation\Contract\Type;
+use One\Annotation\Contract\TypeInterface;
 use One\Annotation\Exception\ParseException;
 use One\Annotation\Type\FloatType;
 use One\Annotation\Type\IntegerType;
@@ -25,7 +25,7 @@ use One\Annotation\Type\StringType;
  *
  * @since 0.2
  */
-class DynamicType implements Type
+class DynamicType implements TypeInterface
 {
     /**
      * 解析动态类型

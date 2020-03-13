@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace One\Protocol;
 
-use One\Protocol\Contract\Protocol as ProtocolInterface;
-use One\Protocol\Contract\Server as ServerInterface;
+use One\Protocol\Contract\ProtocolInterface;
+use One\Protocol\Contract\ServerInterface;
 
 /**
  * 服务器抽象类

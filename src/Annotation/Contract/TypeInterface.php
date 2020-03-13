@@ -6,18 +6,26 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Protocol\Contract
+ * @package     One\Annotation\Contract
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Protocol\Contract;
+namespace One\Annotation\Contract;
 
 /**
- * 协议接口
+ * 类型接口
  *
  * @since 0.2
  */
-interface Protocol
+interface TypeInterface
 {
+    /**
+     * 解析类型
+     *
+     * @param string $value
+     *
+     * @return mixed
+     */
+    public function parse(string $value);
 }

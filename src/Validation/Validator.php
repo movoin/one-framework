@@ -15,7 +15,7 @@ namespace One\Validation;
 
 use One\Utility\Assert;
 use One\Utility\Reflection;
-use One\Validation\Contract\Rule;
+use One\Validation\Contract\RuleInterface;
 use One\Validation\Exception\ValidationException;
 use One\Validation\Rule\CustomRule;
 
@@ -234,10 +234,10 @@ class Validator
      *
      * @param string $name
      *
-     * @return \One\Validation\Contract\Rule
+     * @return \One\Validation\Contract\RuleInterface
      * @throws \One\Validation\Exception\ValidationException
      */
-    public function getRuleInstance(string $name): Rule
+    public function getRuleInstance(string $name): RuleInterface
     {
         if (isset($this->ruleInstances[$name])) {
             return $this->ruleInstances[$name];

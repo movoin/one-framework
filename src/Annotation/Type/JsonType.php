@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace One\Annotation\Type;
 
-use One\Annotation\Contract\Type;
+use One\Annotation\Contract\TypeInterface;
 use One\Annotation\Exception\ParseException;
 use One\Encode\Json;
 use One\Encode\Exception\EncodeException;
@@ -23,7 +23,7 @@ use One\Encode\Exception\EncodeException;
  *
  * @since 0.2
  */
-class JsonType implements Type
+class JsonType implements TypeInterface
 {
     /**
      * 解析 Json 类型

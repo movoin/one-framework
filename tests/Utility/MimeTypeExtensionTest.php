@@ -14,15 +14,23 @@ namespace One\Utility;
 
 class MimeTypeExtensionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetExtension()
+    /**
+     * @dataProvider provideAll
+     */
+    public function testAll($method, $attribute, $result)
     {
-        $this->assertEquals(MimeTypeExtension::getExtension('video/x-smv'), 'smv');
-        $this->assertEquals(MimeTypeExtension::getExtension('bad'), null);
+        $this->assertEquals(MimeTypeExtension::$method($attribute), $result);
     }
 
-    public function testGetMimeType()
+    public function provideAll()
     {
-        $this->assertEquals(MimeTypeExtension::getMimeType('smv'), 'video/x-smv');
-        $this->assertEquals(MimeTypeExtension::getMimeType('bad'), null);
+        return [
+            ['getExtension', 'video/x-smv', 'smv'],
+            ['getExtension', 'bad', null],
+            ['getMimeType', 'smv', 'video/x-smv'],
+            ['getMimeType', 'bad', 'text/plain'],
+            ['getMimeTypeByFilePath', __DIR__ . '/Fixtures/test.txt', 'text/plain'],
+            ['getMimeTypeByFilePath', __DIR__ . '/Fixtures/test', 'text/plain'],
+        ];
     }
 }

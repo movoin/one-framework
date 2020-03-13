@@ -18,7 +18,7 @@ namespace One\Validation\Contract;
  *
  * @since 0.2
  */
-interface Rule
+interface RuleInterface
 {
     /**
      * 获得规则名称、别名
