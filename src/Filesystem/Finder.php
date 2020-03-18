@@ -97,7 +97,9 @@ class Finder implements IteratorAggregate, Countable
      *
      * @var array
      */
-    private $excludes = ['.svn', '_svn', 'CVS', '_darcs', '.arch-params', '.monotone', '.bzr', '.git', '.hg', '.composer'];
+    private $excludes = [
+        '.svn', '_svn', 'CVS', '_darcs', '.arch-params', '.monotone', '.bzr', '.git', '.hg', '.composer'
+    ];
 
     /**
      * 仅匹配文件
@@ -182,25 +184,28 @@ class Finder implements IteratorAggregate, Countable
     /**
      * 查询目录
      *
-     * @param string $dir
+     * @param array|string $dirs
      *
      * @return self
+     * @throws \One\Filesystem\Exception\DirectoryException
      */
-    public function in(string $dir): self
+    public function in($dirs): self
     {
         $resolvedDirs = [];
 
-        if (is_dir($dir)) {
-            $resolvedDirs[] = $this->normalizeDir($dir);
-        } elseif ($glob = glob($dir, (defined('GLOB_BRACE') ? GLOB_BRACE : 0) | GLOB_ONLYDIR | GLOB_NOSORT)) {
-            sort($glob);
-            $resolvedDirs = array_merge($resolvedDirs, array_map([$this, 'normalizeDir'], $glob));
-        } else {
-            throw new DirectoryException([
-                '目录 "{dir}" 不存在' => [
-                    'dir' => $dir
-                ]
-            ]);
+        foreach ((array) $dirs as $dir) {
+            if (is_dir($dir)) {
+                $resolvedDirs[] = $this->normalizeDir($dir);
+            } elseif ($glob = glob($dir, (defined('GLOB_BRACE') ? GLOB_BRACE : 0) | GLOB_ONLYDIR | GLOB_NOSORT)) {
+                sort($glob);
+                $resolvedDirs = array_merge($resolvedDirs, array_map([$this, 'normalizeDir'], $glob));
+            } else {
+                throw new DirectoryException([
+                    '目录 "{dir}" 不存在' => [
+                        'dir' => $dir
+                    ]
+                ]);
+            }
         }
 
         $this->dirs = array_merge($this->dirs, $resolvedDirs);
@@ -211,13 +216,13 @@ class Finder implements IteratorAggregate, Countable
     /**
      * 排除目录
      *
-     * @param string $dir
+     * @param string|array $dirs
      *
      * @return self
      */
-    public function exclude(string $dir): self
+    public function exclude($dirs): self
     {
-        $this->excludes = array_merge($this->excludes, (array) $dir);
+        $this->excludes = array_merge($this->excludes, (array) $dirs);
 
         return $this;
     }
@@ -310,6 +315,15 @@ class Finder implements IteratorAggregate, Countable
 
         // 自定义过滤
         if ($this->filters) {
+            $iterator = new CallbackFilterIterator($iterator, function (FileInfo $current) {
+                foreach ($this->filters as $filter) {
+                    if ($filter($current) === false) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
         }
 
         return $iterator;
@@ -321,51 +335,9 @@ class Finder implements IteratorAggregate, Countable
      * @param string $dir
      *
      * @return string
-     * @throws \One\Filesystem\Exception\DirectoryException
-     * @throws \One\Filesystem\Exception\FilesystemException
      */
     private function normalizeDir(string $dir): string
     {
-        if (! is_dir($dir)) {
-            throw new DirectoryException([
-                '目录 "{dir}" 不存在' => [
-                    'dir' => $dir
-                ]
-            ]);
-        }
-
-        if ('/' === $dir) {
-            return $dir;
-        }
-
-        $dir = rtrim($dir, '/' . DIRECTORY_SEPARATOR);
-
-        // 去除空格
-        while (preg_match('#\p{C}+|^\./#u', $dir)) {
-            $dir = preg_replace('#\p{C}+|^\./#u', '', $dir);
-        }
-
-        $parts = [];
-
-        foreach (explode('/', $dir) as $part) {
-            switch ($part) {
-                case '':
-                case '.':
-                    break;
-
-                case '..':
-                    if (empty($parts)) {
-                        throw new FilesystemException(['路径超出根目录范围 "{dir}"' => ['dir' => $dir]]);
-                    }
-                    array_pop($parts);
-                    break;
-
-                default:
-                    $parts[] = $part;
-                    break;
-            }
-        }
-
-        return implode('/', $parts);
+        return rtrim($dir, '/' . DIRECTORY_SEPARATOR);
     }
 }

@@ -96,7 +96,9 @@ class FileInfo extends SplFileInfo
         restore_error_handler();
 
         if (false === $content) {
+            // @codeCoverageIgnoreStart
             throw new RuntimeException($error);
+            // @codeCoverageIgnoreEnd
         }
 
         return $content;

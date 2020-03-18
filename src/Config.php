@@ -17,8 +17,8 @@ use One\Utility\Assert;
 use One\Utility\Helper\ArrayHelper;
 use One\Utility\Helper\YamlHelper;
 use One\Exception\RuntimeException;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
+use One\Filesystem\Finder;
+use One\Filesystem\Exception\DirectoryException;
 
 /**
  * 配置类
@@ -163,12 +163,11 @@ class Config
         try {
             $finder = new Finder;
             $finder->files()
-                ->ignoreVCS(true)
                 ->name('*.yml')
                 ->exclude($exclude)
                 ->in($path)
             ;
-        } catch (DirectoryNotFoundException $e) {
+        } catch (DirectoryException $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 

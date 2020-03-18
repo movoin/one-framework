@@ -48,22 +48,11 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
      *
      * @param string $path
      * @param int $flags
-     *
-     * @throws \One\Exception\RuntimeException
      */
     public function __construct(string $path, int $flags)
     {
-        if ($flags & (self::CURRENT_AS_PATHNAME | self::CURRENT_AS_SELF)) {
-            throw new RuntimeException('此迭代类仅支持 CURRENT_AS_FILEINFO');
-        }
-
         parent::__construct($path, $flags);
-
         $this->rootPath = $path;
-
-        if ('/' !== \DIRECTORY_SEPARATOR && ! ($flags & self::UNIX_PATHS)) {
-            $this->directorySeparator = DIRECTORY_SEPARATOR;
-        }
     }
 
     /**
@@ -104,15 +93,19 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
             }
 
             return $children;
+        // @codeCoverageIgnoreStart
         } catch (UnexpectedValueException $e) {
             return new RecursiveArrayIterator([]);
         }
+        // @codeCoverageIgnoreEnd
     }
 
     public function rewind(): void
     {
         if (false === $this->isRewindable()) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         parent::rewind();
@@ -133,6 +126,8 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
             }
         }
 
+        // @codeCoverageIgnoreStart
         return $this->rewindable = false;
+        // @codeCoverageIgnoreEnd
     }
 }
