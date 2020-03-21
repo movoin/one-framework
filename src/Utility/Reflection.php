@@ -39,6 +39,7 @@ class Reflection
      * @param array $args
      *
      * @return object
+     * @throws \ReflectionException
      */
     public static function newInstance($abstract, array $args = []): object
     {
