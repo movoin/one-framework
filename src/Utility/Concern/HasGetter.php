@@ -15,6 +15,11 @@ namespace One\Utility\Concern;
 
 use One\Exception\RuntimeException;
 
+/**
+ * Getter 特征
+ *
+ * @since 0.2
+ */
 trait HasGetter
 {
     /**

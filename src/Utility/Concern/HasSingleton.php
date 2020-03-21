@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace One\Utility\Concern;
 
+/**
+ * 单例特征
+ *
+ * @since 0.2
+ */
 trait HasSingleton
 {
     /**
