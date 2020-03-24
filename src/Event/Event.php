@@ -13,7 +13,8 @@ declare(strict_types=1);
 
 namespace One\Event;
 
-use One\Collection\Context;
+use One\Collection\Concern\HasContext;
+use One\Collection\Concern\HasContextGetter;
 use One\Event\Emitter;
 use One\Event\Contract\EventInterface;
 
@@ -24,18 +25,15 @@ use One\Event\Contract\EventInterface;
  */
 class Event implements EventInterface
 {
+    use HasContext;
+    use HasContextGetter;
+
     /**
      * 事件名称
      *
      * @var string
      */
     protected $name;
-    /**
-     * 事件上下文对象
-     *
-     * @var \One\Collection\Context
-     */
-    protected $context;
     /**
      * 事件触发对象
      *
@@ -83,36 +81,6 @@ class Event implements EventInterface
     public function setEmitter(Emitter $emitter): self
     {
         $this->emitter = $emitter;
-
-        return $this;
-    }
-
-    /**
-     * 获得事件上下文对象
-     *
-     * @return \One\Collection\Context
-     */
-    public function getContext(): Context
-    {
-        if ($this->context === null) {
-            $this->context = new Context;
-        }
-
-        return $this->context;
-    }
-
-    /**
-     * 设置事件上下文
-     *
-     * @param array $contexts
-     *
-     * @return self
-     */
-    public function setContexts(array $contexts): self
-    {
-        if ($contexts) {
-            $this->getContext()->setMulti($contexts);
-        }
 
         return $this;
     }

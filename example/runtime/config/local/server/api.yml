@@ -1,0 +1,21 @@
+---
+#
+# 服务配置
+#
+
+# 监听
+listen: 127.0.0.1:9501
+
+# 协议
+protocol: http
+
+# 代码目录
+home: {APP_PATH}/api
+
+# 启动项（附加组件）
+boot:
+  - Api/Boot/AcmeProvider
+
+  # Swoole 配置
+# swoole:
+

@@ -126,7 +126,7 @@ class Emitter
     public function emit($event, array $parameters = []): void
     {
         $event = $this->ensureEvent($event);
-        $event->setEmitter($this)->setContexts($parameters);
+        $event->setEmitter($this)->setContexts($parameters + ['time' => microtime(true)]); // 毫秒级浮点时间戳
 
         $listeners = $this->getListeners($event);
 

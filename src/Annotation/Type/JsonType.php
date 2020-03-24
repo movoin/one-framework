@@ -15,8 +15,8 @@ namespace One\Annotation\Type;
 
 use One\Annotation\Contract\TypeInterface;
 use One\Annotation\Exception\ParseException;
-use One\Encode\Json;
-use One\Encode\Exception\EncodeException;
+use One\Utility\Encode\Json;
+use One\Utility\Encode\Exception\EncodeException;
 
 /**
  * Json 类型

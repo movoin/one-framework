@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace One\Collection\Concern;
 
 use One\Collection\Collection;
+use One\Exception\RuntimeException;
 
 /**
  * 集合容器特征
@@ -34,7 +35,7 @@ trait HasCollection
      *
      * @param \One\Collection\Collection $coll
      */
-    public function setCollection(Collection $coll)
+    public function setCollection(Collection $coll): void
     {
         $this->coll = $coll;
     }
@@ -46,6 +47,10 @@ trait HasCollection
      */
     public function getCollection(): Collection
     {
+        if ($this->coll === null) {
+            $this->coll = new Collection;
+        }
+
         return $this->coll;
     }
 }

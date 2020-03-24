@@ -254,7 +254,7 @@ class Manager
      * @return mixed
      * @throws \One\Filesystem\Exception\FilesystemException
      */
-    public function __call($method, $arguments)
+    public function __call(string $method, array $arguments)
     {
         list($prefix, $arguments) = $this->filterPrefix($arguments);
 

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace One\Collection\Concern;
 
 use One\Collection\Container;
+use One\Exception\RuntimeException;
 
 /**
  * 对象容器特征
@@ -34,7 +35,7 @@ trait HasContainer
      *
      * @param \One\Collection\Container $container
      */
-    public function setContainer(Container $container)
+    public function setContainer(Container $container): void
     {
         $this->container = $container;
     }
@@ -46,6 +47,10 @@ trait HasContainer
      */
     public function getContainer(): Container
     {
+        if ($this->container === null) {
+            $this->container = new Container;
+        }
+
         return $this->container;
     }
 }

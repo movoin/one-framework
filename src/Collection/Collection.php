@@ -19,7 +19,7 @@ use Countable;
 use IteratorAggregate;
 use One\Collection\Contract\Arrayable;
 use One\Collection\Contract\Jsonable;
-use One\Encode\Json;
+use One\Utility\Encode\Json;
 use One\Utility\Helper\ArrayHelper;
 
 /**

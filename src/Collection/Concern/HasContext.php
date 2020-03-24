@@ -34,18 +34,38 @@ trait HasContext
      *
      * @param \One\Collection\Context $context
      */
-    public function setContext(Context $context)
+    public function setContext(Context $context): void
     {
         $this->context = $context;
     }
 
     /**
-     * 获得容器
+     * 获得上下文容器
      *
      * @return \One\Collection\Context
      */
     public function getContext(): Context
     {
+        if ($this->context === null) {
+            $this->context = new Context;
+        }
+
         return $this->context;
+    }
+
+    /**
+     * 设置事件上下文
+     *
+     * @param array $contexts
+     *
+     * @return self
+     */
+    public function setContexts(array $contexts): self
+    {
+        if ($contexts) {
+            $this->getContext()->setMulti($contexts);
+        }
+
+        return $this;
     }
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace One\Utility;
 
 use ReflectionClass;
+use One\Utility\Helper\ArrayHelper;
 
 /**
  * 反射助手类
@@ -44,5 +45,27 @@ class Reflection
     public static function newInstance($abstract, array $args = []): object
     {
         return (new ReflectionClass($abstract))->newInstanceArgs($args);
+    }
+
+    /**
+     * 获得类方法
+     *
+     * @param mixed $abstract
+     * @param string $prefix
+     *
+     * @return array
+     * @throws \ReflectionException
+     */
+    public static function getMethods($abstract, string $prefix = null): array
+    {
+        $methods = (new ReflectionClass($abstract))->getMethods();
+
+        if ($prefix !== null) {
+            $methods = ArrayHelper::where($methods, function ($method) {
+                return substr($method->getName(), 0, 2) === 'on';
+            });
+        }
+
+        return $methods;
     }
 }
