@@ -1,9 +1,9 @@
 {
-  "name": "movoin/one-framework",
+  "name": "movoin/one-example",
   "description": "Just one framework.",
   "type": "library",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/movoin/one-framework",
+  "homepage": "https://github.com/movoin/one-example",
   "authors": [
     {
       "name": "Allen Luo",
@@ -16,15 +16,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "One\\": "src/"
-    },
-    "files": [
-      "src/Functions.php"
-    ]
+      "One\\Example\\": "app/"
+    }
   },
   "autoload-dev": {
     "psr-4": {
-      "One\\Tests\\": "tests/"
+      "One\\Example\\Tests\\": "tests/"
     }
   },
   "require": {

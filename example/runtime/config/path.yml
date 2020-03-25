@@ -7,5 +7,3 @@
 php_bin: "/usr/local/bin/php"
 # One Bin 路径
 one_bin: "{ROOT_PATH}/bin/one"
-# 运行时路径
-runtime_path: "{ROOT_PATH}/runtime"

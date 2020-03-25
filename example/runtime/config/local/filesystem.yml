@@ -1,0 +1,2 @@
+cloud:
+  path: "{ROOT_PATH}/runtime/foo"

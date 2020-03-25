@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace One\Server;
 
+use One\Exception\LogicException;
 use One\Server\Contract\ProviderInterface;
 use One\Server\Contract\ServerInterface;
 
@@ -48,6 +49,7 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function register(): void
     {
+        throw new LogicException(sprintf('你必须重载组件提供器 %s 的 register() 方法', __CLASS__));
     }
 
     /**

@@ -28,10 +28,10 @@ class AboutCommand extends Command
     {
         $this
             ->setName('about')
-            ->setDescription('关于 One Console Tool')
+            ->setDescription('About One Console Tool')
             ->setHelp(
                 <<<EOT
-<info>php one.phar about</info>
+<info>php one about</info>
 EOT
             )
         ;
@@ -50,7 +50,7 @@ EOT
         $output->writeln(
             <<<EOT
 <info>One Console Tool - One Framework 命令行工具集</info>
-<comment>One Framework 是一款基于 Swoole 的服务开发框架，提供有 Restful API 快速开发、RPC 等。</comment>
+<comment>One Framework 是一款基于 Swoole 的服务开发框架，具备 Restful API、RPC 等项目的快速开发能力。</comment>
 EOT
         );
 

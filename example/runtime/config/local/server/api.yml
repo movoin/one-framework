@@ -10,12 +10,27 @@ listen: 127.0.0.1:9501
 protocol: http
 
 # 代码目录
-home: {APP_PATH}/api
+home: "{ROOT_PATH}/api"
 
 # 启动项（附加组件）
 boot:
-  - Api/Boot/AcmeProvider
+  - Api\Boot\AcmeProvider
 
-  # Swoole 配置
+# Swoole 配置
 # swoole:
 
+# 中间件配置
+middleware:
+  # 分组
+  group:
+    global:
+      - Api\Middleware\AcmeFilter
+  # 匹配规则
+  match:
+    "*": global
+    "/foo": Api\Middleware\FooFilter
+
+# 文件系统
+filesystem:
+  local:
+    path: "{ROOT_PATH}/runtime/tmp"

@@ -6,20 +6,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One
- * @category    Bin
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
 if (PHP_SAPI !== 'cli' && PHP_SAPI !== 'phpdbg') {
-    echo 'Warning: One should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+    echo 'Warning: One should be invoked via the CLI version of PHP, not the ' . PHP_SAPI . ' SAPI' . PHP_EOL;
 }
+
+defined('ROOT_PATH') or define('ROOT_PATH', dirname(__DIR__));
 
 setlocale(LC_ALL, 'C');
 
 require __DIR__ . '/../bootstrap.php';
 
+use One\Console\Input;
 use One\Console\Application;
 
 error_reporting(-1);
@@ -28,4 +29,4 @@ putenv('ONE_BINARY=' . realpath($_SERVER['argv'][0]));
 
 // Run the console application
 $app = new Application();
-$app->run();
+$app->run(new Input);
