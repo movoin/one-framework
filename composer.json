@@ -48,7 +48,8 @@
       "phpunit -c ./phpunit.xml"
     ],
     "phpunit": "phpunit -c ./phpunit.xml",
-    "api-docs": "sami update ./sami.inc"
+    "api-docs": "sami update ./sami.inc",
+    "manual": "docsify serve ./docs/manual"
   },
   "config": {
     "preferred-install": "dist",

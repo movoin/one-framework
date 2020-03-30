@@ -112,7 +112,7 @@ class EmitterTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Event\Exception\EventException
+     * @expectedException One\Event\Exception\EventTypeErrorException
      * @dataProvider eventExceptionProvider
      */
     public function testEventException($method, $params)
@@ -129,7 +129,7 @@ class EmitterTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Event\Exception\ListenerException
+     * @expectedException One\Event\Exception\ListenerTypeErrorException
      */
     public function testListenerException()
     {

@@ -16,9 +16,11 @@ namespace One\Filesystem;
 use One\Utility\Assert;
 use One\Filesystem\ContentListingFormatter;
 use One\Filesystem\Contract\AdapterInterface;
-use One\Filesystem\Exception\FileException;
-use One\Filesystem\Exception\DirectoryException;
-use One\Filesystem\Exception\FilesystemException;
+use One\Filesystem\Exception\DirectoryNotExistsException;
+use One\Filesystem\Exception\FileExistsException;
+use One\Filesystem\Exception\FileNotExistsException;
+use One\Filesystem\Exception\FilesystemPathOutOfRangeException;
+use One\Filesystem\Exception\RewindResourceTypeErrorException;
 
 /**
  * 文件系统类
@@ -75,7 +77,7 @@ class Filesystem
      * @param string $path
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
      */
     public function exists(string $path): bool
     {
@@ -90,8 +92,9 @@ class Filesystem
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\FileReadFailureException
      */
     public function read(string $path): string
     {
@@ -107,8 +110,9 @@ class Filesystem
      * @param string $path
      *
      * @return resource
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\FileReadFailureException
      */
     public function readStream(string $path)
     {
@@ -124,8 +128,9 @@ class Filesystem
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\FileReadFailureException
      */
     public function readAndDelete(string $path): string
     {
@@ -161,8 +166,8 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileExistsException
      */
     public function write(string $path, string $contents, array $config = []): bool
     {
@@ -181,8 +186,9 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileExistsException
+     * @throws \One\Filesystem\Exception\RewindResourceTypeErrorException
      */
     public function writeStream(string $path, $resource, array $config = []): bool
     {
@@ -202,8 +208,8 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function update(string $path, string $contents, array $config = []): bool
     {
@@ -222,8 +228,9 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\RewindResourceTypeErrorException
      */
     public function updateStream(string $path, $resource, array $config = []): bool
     {
@@ -243,7 +250,7 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
      */
     public function put(string $path, string $contents, array $config = []): bool
     {
@@ -265,7 +272,8 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\RewindResourceTypeErrorException
      */
     public function putStream(string $path, $resource, array $config = []): bool
     {
@@ -287,8 +295,9 @@ class Filesystem
      * @param string $newpath
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\FileExistsException
      */
     public function rename(string $path, string $newpath): bool
     {
@@ -307,8 +316,8 @@ class Filesystem
      * @param string $path
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function delete(string $path): bool
     {
@@ -325,8 +334,8 @@ class Filesystem
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\DirectoryException
+     * @throws \One\Filesystem\Exception\DirectoryExistsException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
      */
     public function createDir(string $dirname, array $config = []): bool
     {
@@ -342,15 +351,15 @@ class Filesystem
      * @param string $dirname
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\DirectoryException
+     * @throws \One\Filesystem\Exception\DirectoryNotExistsException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
      */
     public function deleteDir(string $dirname): bool
     {
         $dirname = $this->normalizePath($dirname);
 
         if ($dirname === '') {
-            throw DirectoryException::directoryExistsException($this->adapterName, $dirname);
+            throw new DirectoryNotExistsException($dirname);
         }
 
         return $this->getAdapter()->deleteDir($dirname);
@@ -362,8 +371,8 @@ class Filesystem
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function getMimeType(string $path): string
     {
@@ -379,8 +388,8 @@ class Filesystem
      * @param string $path
      *
      * @return array
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function getMetaData(string $path): array
     {
@@ -396,8 +405,8 @@ class Filesystem
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function getVisibility(string $path): string
     {
@@ -414,8 +423,8 @@ class Filesystem
      * @param string $visibility
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function setVisibility(string $path, string $visibility): bool
     {
@@ -430,12 +439,12 @@ class Filesystem
      *
      * @param string $path
      *
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     protected function assertPresent(string $path)
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException($this->adapterName, $path);
+            throw new FileNotExistsException($path);
         }
     }
 
@@ -444,12 +453,12 @@ class Filesystem
      *
      * @param string $path
      *
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileExistsException
      */
     protected function assertAbsent(string $path)
     {
         if ($this->exists($path)) {
-            throw FileException::fileExistsException($this->adapterName, $path);
+            throw new FileExistsException($path);
         }
     }
 
@@ -471,7 +480,7 @@ class Filesystem
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPathOutOfRangeException
      */
     protected function normalizePath(string $path): string
     {
@@ -488,7 +497,7 @@ class Filesystem
 
                 case '..':
                     if (empty($parts)) {
-                        throw new FilesystemException(['路径超出根目录范围 "{path}"' => ['path' => $path]]);
+                        throw new FilesystemPathOutOfRangeException($path);
                     }
                     array_pop($parts);
                     break;
@@ -524,12 +533,12 @@ class Filesystem
      * @param resource $resource
      *
      * @return void
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\RewindResourceTypeErrorException
      */
     protected function rewindStream($resource): void
     {
         if (! Assert::resource($resource)) {
-            throw new FilesystemException(['{method} 参数类型必须为 "resource"' => ['method' => __METHOD__]]);
+            throw new RewindResourceTypeErrorException;
         }
 
         if (ftell($resource) !== 0 && $this->isSeekableStream($resource)) {

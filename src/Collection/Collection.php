@@ -354,8 +354,6 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, Arrayable
     /**
      * @param string $offset
      * @param string $value
-     *
-     * @throws \One\Collection\Exception\InvalidArgumentException
      */
     public function offsetSet($offset, $value): void
     {

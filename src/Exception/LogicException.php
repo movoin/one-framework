@@ -13,11 +13,19 @@ declare(strict_types=1);
 
 namespace One\Exception;
 
+use One\Exception\Exception;
+
 /**
- * 逻辑异常类
+ * 逻辑异常基类
  *
  * @since 0.2
  */
-class LogicException extends \LogicException
+class LogicException extends Exception
 {
+    /**
+     * 类型: 逻辑
+     *
+     * @var int
+     */
+    protected $type = self::LOGIC;
 }

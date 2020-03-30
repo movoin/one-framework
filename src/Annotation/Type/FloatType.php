@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace One\Annotation\Type;
 
 use One\Annotation\Contract\TypeInterface;
-use One\Annotation\Exception\ParseException;
+use One\Annotation\Exception\AnnotationParseErrorException;
 
 /**
  * 浮点数值类型
@@ -33,7 +33,7 @@ class FloatType implements TypeInterface
     public function parse(string $value)
     {
         if (false === ($value = filter_var($value, FILTER_VALIDATE_FLOAT))) {
-            throw new ParseException(__CLASS__, '必须为浮点数值类型');
+            throw new AnnotationParseErrorException((string) $value, '必须为 Float 类型');
         }
 
         return (float) $value;

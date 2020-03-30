@@ -6,20 +6,20 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Event\Exception
+ * @package     One\Exception
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Event\Exception;
+namespace One\Exception;
 
-use One\Exception\RuntimeException;
+use One\Exception\LogicException;
 
 /**
- * 事件异常类
+ * XXX 未找到异常基类
  *
  * @since 0.2
  */
-class EventException extends RuntimeException
+class NotFoundException extends LogicException
 {
 }

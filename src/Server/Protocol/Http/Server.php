@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace One\Server\Protocol\Http;
 
 use Swoole\Http\Server as SwooleHttpServer;
+use Swoole\Http\Request as SwooleHttpRequest;
+use Swoole\Http\Response as SwooleHttpResponse;
 use One\Server\AbstractServer;
 
 /**
@@ -31,13 +33,15 @@ class Server extends AbstractServer
     private $swoole;
 
     /**
-     * 绑定 Swoole Server 事件
+     * 接收 Http 请求
      *
-     * @return self
+     * @param \Swoole\Http\Request $request
+     * @param \Swoole\Http\Response $response
+     *
+     * @return void
      */
-    protected function bindSwooleEvents(): self
+    public function onRequest(SwooleHttpRequest $request, SwooleHttpResponse $response): void
     {
-        return $this;
     }
 
     /**
@@ -48,12 +52,18 @@ class Server extends AbstractServer
     protected function getSwooleServer(): SwooleHttpServer
     {
         if ($this->swoole === null) {
-            // $this->swoole = new SwooleHttpServer(
-            //     $config['host'],
-            //     $config['port'],
-            //     SWOOLE_PROCESS,
-            //     SWOOLE_SOCK_TCP
-            // );
+            $uri = $this->getListenUri();
+
+            $this->swoole = new SwooleHttpServer(
+                $uri['host'],
+                $uri['port'],
+                SWOOLE_PROCESS,
+                SWOOLE_SOCK_TCP
+            );
+
+            unset($uri);
+
+            $this->swoole->set($this->config->get('swoole'));
         }
 
         return $this->swoole;

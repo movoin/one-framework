@@ -92,21 +92,36 @@ class AnnotationTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @dataProvider exceptionsProvider
-     * @expectedException One\Exception\RuntimeException
+     * @dataProvider exceptionsProvider1
+     * @expectedException One\Annotation\Exception\AnnotationParseErrorException
      */
-    public function testRuntimeExceptions($method, $param)
+    public function testAnnotationParseErrorException($method, $param)
     {
         call_user_func_array([$this->annotation, $method], $param);
     }
 
-    public function exceptionsProvider()
+    public function exceptionsProvider1()
     {
         return [
-            ['getFunction', ['test']],
+            ['getMethod', ['One\Tests\Annotation\Fixtures\Test', 'badCase']],
+        ];
+    }
+
+    /**
+     * @dataProvider exceptionsProvider2
+     * @expectedException One\Annotation\Exception\AnnotationTargetNotFoundException
+     */
+    public function testAnnotationTargetNotFoundException($method, $param)
+    {
+        call_user_func_array([$this->annotation, $method], $param);
+    }
+
+    public function exceptionsProvider2()
+    {
+        return [
             ['getClass', ['test']],
             ['getMethod', ['test', 'method']],
-            ['getMethod', ['One\Tests\Annotation\Fixtures\Test', 'badCase']],
+            ['getFunction', ['test']],
             ['getProperty', ['test', 'property']],
         ];
     }

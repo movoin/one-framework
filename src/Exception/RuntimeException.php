@@ -13,51 +13,19 @@ declare(strict_types=1);
 
 namespace One\Exception;
 
-use Throwable;
+use One\Exception\Exception;
 
 /**
- * 运行时异常类
+ * 运行时异常基类
  *
  * @since 0.2
  */
-class RuntimeException extends \RuntimeException
+class RuntimeException extends Exception
 {
     /**
-     * 构造
+     * 类型: 运行时
      *
-     * @param string|array $message
-     * @param int $code
-     * @param Throwable $previous
+     * @var int
      */
-    public function __construct($message = '', int $code = 0, Throwable $previous = null)
-    {
-        if (is_array($message)) {
-            $message = $this->formatMessage(key($message), $message[key($message)]);
-        }
-
-        parent::__construct($message, $code, $previous);
-    }
-
-    /**
-     * 格式化异常消息
-     *
-     * @param string $format
-     * @param array $attributes
-     *
-     * @return string
-     */
-    protected function formatMessage(string $format, array $attributes = []): string
-    {
-        if ($attributes === []) {
-            return $format;
-        }
-
-        $message = $format;
-
-        foreach ($attributes as $name => $value) {
-            $message = str_replace("{{$name}}", $value, $message);
-        }
-
-        return $message;
-    }
+    protected $type = self::RUNTIME;
 }

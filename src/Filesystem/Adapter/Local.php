@@ -20,9 +20,13 @@ use FilesystemIterator;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use One\Filesystem\Adapter;
-use One\Filesystem\Exception\FileException;
-use One\Filesystem\Exception\DirectoryException;
-use One\Filesystem\Exception\FilesystemException;
+use One\Filesystem\Exception\DirectoryCreateFailureException;
+use One\Filesystem\Exception\DirectoryExistsException;
+use One\Filesystem\Exception\DirectoryNotExistsException;
+use One\Filesystem\Exception\DirectoryUnreadableException;
+use One\Filesystem\Exception\FileExistsException;
+use One\Filesystem\Exception\FileNotExistsException;
+use One\Filesystem\Exception\FileReadFailureException;
 use One\Utility\MimeTypeExtension;
 use One\Utility\Helper\ArrayHelper;
 
@@ -76,7 +80,8 @@ class Local extends Adapter
      * @param int $writeFlags
      * @param array $permissions
      *
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
      */
     public function __construct(
         string $basePath,
@@ -112,19 +117,20 @@ class Local extends Adapter
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\FileReadFailureException
      */
     public function read(string $path): string
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
 
         if (($content = file_get_contents($location)) === false) {
             // @codeCoverageIgnoreStart
-            throw FileException::fileException('文件系统 {adapter}: 文件 {file} 无法读取文件内容', __CLASS__, $path);
+            throw new FileReadFailureException($path);
             // @codeCoverageIgnoreEnd
         }
 
@@ -139,19 +145,20 @@ class Local extends Adapter
      * @param string $path
      *
      * @return resource
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
+     * @throws \One\Filesystem\Exception\FileReadFailureException
      */
     public function readStream(string $path)
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
 
         if (($stream = @fopen($location, 'rb')) === false) {
             // @codeCoverageIgnoreStart
-            throw FileException::fileException('文件系统 {adapter}: 文件 {file} 无法读取文件内容', __CLASS__, $path);
+            throw new FileReadFailureException($path);
             // @codeCoverageIgnoreEnd
         }
 
@@ -221,13 +228,14 @@ class Local extends Adapter
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
+     * @throws \One\Filesystem\Exception\FileExistsException
      */
     public function write(string $path, string $contents, array $config = []): bool
     {
         if ($this->exists($path)) {
-            throw FileException::fileExistsException(__CLASS__, $path);
+            throw new FileExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -256,13 +264,14 @@ class Local extends Adapter
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
+     * @throws \One\Filesystem\Exception\FileExistsException
      */
     public function writeStream(string $path, $resource, array $config = []): bool
     {
         if ($this->exists($path)) {
-            throw FileException::fileExistsException(__CLASS__, $path);
+            throw new FileExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -300,13 +309,14 @@ class Local extends Adapter
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function update(string $path, string $contents, array $config = []): bool
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -335,13 +345,14 @@ class Local extends Adapter
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function updateStream(string $path, $resource, array $config = []): bool
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -388,12 +399,12 @@ class Local extends Adapter
      * @param string $path
      *
      * @return array
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function getMetaData(string $path): array
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -411,12 +422,12 @@ class Local extends Adapter
      * @param string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function getMimeType(string $path): string
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -437,13 +448,14 @@ class Local extends Adapter
      * @param string $newpath
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function rename(string $path, string $newpath): bool
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         $location = $this->applyBasePath($path);
@@ -460,12 +472,12 @@ class Local extends Adapter
      * @param string $path
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function delete(string $path): bool
     {
         if (! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         return unlink($this->applyBasePath($path));
@@ -478,14 +490,14 @@ class Local extends Adapter
      * @param array $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\DirectoryException
+     * @throws \One\Filesystem\Exception\DirectoryExistsException
      */
     public function createDir(string $dirname, array $config = []): bool
     {
         $location = $this->applyBasePath($dirname);
 
         if (is_dir($location)) {
-            throw DirectoryException::directoryExistsException(__CLASS__, $dirname);
+            throw new DirectoryExistsException($dirname);
         }
 
         $umask = umask(0);
@@ -507,14 +519,14 @@ class Local extends Adapter
      * @param string $dirname
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\DirectoryException
+     * @throws \One\Filesystem\Exception\DirectoryNotExistsException
      */
     public function deleteDir(string $dirname): bool
     {
         $location = $this->applyBasePath($dirname);
 
         if (! is_dir($location)) {
-            throw DirectoryException::directoryNotExistsException(__CLASS__, $dirname);
+            throw new DirectoryNotExistsException($dirname);
         }
 
         $contents = new RecursiveIteratorIterator(
@@ -549,14 +561,14 @@ class Local extends Adapter
      * @param  string $path
      *
      * @return string
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function getVisibility(string $path): string
     {
         $location = $this->applyBasePath($path);
 
         if (! is_dir($location) && ! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         clearstatcache(false, $location);
@@ -572,7 +584,7 @@ class Local extends Adapter
      * @param string $visibility
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FileNotExistsException
      */
     public function setVisibility(string $path, string $visibility): bool
     {
@@ -580,7 +592,7 @@ class Local extends Adapter
         $type = is_dir($location) ? 'dir' : 'file';
 
         if ($type === 'file' && ! $this->exists($path)) {
-            throw FileException::fileNotExistsException(__CLASS__, $path);
+            throw new FileNotExistsException($path);
         }
 
         return chmod($location, $this->permissions[$type][$visibility]);
@@ -593,7 +605,8 @@ class Local extends Adapter
      * @param string $path
      *
      * @return void
-     * @throws \One\Filesystem\Exception\DirectoryException
+     * @throws \One\Filesystem\Exception\DirectoryCreateFailureException
+     * @throws \One\Filesystem\Exception\DirectoryUnreadableException
      */
     protected function ensureDirectory(string $path): void
     {
@@ -604,20 +617,12 @@ class Local extends Adapter
             umask($umask);
 
             if (! is_dir($path)) {
-                throw DirectoryException::directoryException(
-                    '文件系统 {adapter}: 无法创建目录 "{$path}"',
-                    __CLASS__,
-                    $path
-                );
+                throw new DirectoryCreateFailureException($path);
             }
         }
 
         if (! is_readable($path)) {
-            throw DirectoryException::directoryException(
-                '文件系统 {adapter}: 无法访问目录 "{$path}"',
-                __CLASS__,
-                $path
-            );
+            throw new DirectoryUnreadableException($path);
         }
         // @codeCoverageIgnoreEnd
     }

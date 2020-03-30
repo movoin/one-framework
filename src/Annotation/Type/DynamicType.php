@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace One\Annotation\Type;
 
 use One\Annotation\Contract\TypeInterface;
-use One\Annotation\Exception\ParseException;
+use One\Annotation\Exception\AnnotationParseErrorException;
 use One\Annotation\Type\FloatType;
 use One\Annotation\Type\IntegerType;
 use One\Annotation\Type\JsonType;
@@ -45,21 +45,21 @@ class DynamicType implements TypeInterface
         try {
             $json = (new JsonType)->parse($value);
             return $json;
-        } catch (ParseException $e) {
+        } catch (AnnotationParseErrorException $e) {
         }
         if (isset($json) && ! empty($json)) return $json;
 
         // Int
         try {
             $int = (new IntegerType)->parse($value);
-        } catch (ParseException $e) {
+        } catch (AnnotationParseErrorException $e) {
         }
         if (isset($int) && ! empty($int)) return $int;
 
         // Float
         try {
             $float = (new FloatType)->parse($value);
-        } catch (ParseException $e) {
+        } catch (AnnotationParseErrorException $e) {
         }
         if (isset($float) && ! empty($float)) return $float;
 

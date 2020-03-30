@@ -6,20 +6,20 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Event\Exception
+ * @package     One\Exception
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Event\Exception;
+namespace One\Exception;
 
-use One\Exception\RuntimeException;
+use One\Exception\LogicException;
 
 /**
- * 事件监听异常类
+ * 非法参数异常基类
  *
  * @since 0.2
  */
-class ListenerException extends RuntimeException
+class InvalidArgumentException extends LogicException
 {
 }

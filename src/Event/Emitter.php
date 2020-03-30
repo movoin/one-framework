@@ -18,8 +18,8 @@ use One\Event\Listener;
 use One\Event\OnceListener;
 use One\Event\Contract\EventInterface;
 use One\Event\Contract\ListenerInterface;
-use One\Event\Exception\EventException;
-use One\Event\Exception\ListenerException;
+use One\Event\Exception\EventTypeErrorException;
+use One\Event\Exception\ListenerTypeErrorException;
 use One\Utility\Assert;
 use One\Utility\Reflection;
 use One\Utility\Helper\ArrayHelper;
@@ -68,8 +68,8 @@ class Emitter
      * @param int $priority
      *
      * @return self
-     * @throws \One\Event\Exception\EventException
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\EventTypeErrorException
+     * @throws \One\Event\Exception\ListenerTypeErrorException
      */
     public function on($event, $listener, int $priority = Emitter::PRI_NORMAL): self
     {
@@ -86,8 +86,8 @@ class Emitter
      * @param int $priority
      *
      * @return self
-     * @throws \One\Event\Exception\EventException
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\EventTypeErrorException
+     * @throws \One\Event\Exception\ListenerTypeErrorException
      */
     public function once($event, $listener, int $priority = Emitter::PRI_NORMAL): self
     {
@@ -102,7 +102,7 @@ class Emitter
      * @param \One\Event\Contract\EventInterface|string $event
      *
      * @return self
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventTypeErrorException
      */
     public function off($event): self
     {
@@ -121,7 +121,7 @@ class Emitter
      * @param array $parameters
      *
      * @return void
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventTypeErrorException
      */
     public function emit($event, array $parameters = []): void
     {
@@ -143,7 +143,7 @@ class Emitter
      * @param \One\Event\Contract\EventInterface|string $event
      *
      * @return array
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventTypeErrorException
      */
     public function getListeners($event): array
     {
@@ -172,8 +172,8 @@ class Emitter
      * @param bool $once
      *
      * @return void
-     * @throws \One\Event\Exception\EventException
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\EventTypeErrorException
+     * @throws \One\Event\Exception\ListenerTypeErrorException
      */
     public function addListener($event, $listener, int $priority = Emitter::PRI_NORMAL, bool $once = false): void
     {
@@ -255,7 +255,7 @@ class Emitter
      * @param \One\Event\Contract\EventInterface|string $event
      *
      * @return string
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventTypeErrorException
      */
     protected function getEventName($event): string
     {
@@ -266,7 +266,7 @@ class Emitter
             return $event;
         }
 
-        throw new EventException('事件必须为字符串或 EventInterface 实例');
+        throw new EventTypeErrorException;
     }
 
     /**
@@ -275,7 +275,7 @@ class Emitter
      * @param \One\Event\Contract\EventInterface|string $event
      *
      * @return \One\Event\Contract\EventInterface
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventTypeErrorException
      */
     protected function ensureEvent($event): EventInterface
     {
@@ -286,7 +286,7 @@ class Emitter
             return new Event($event);
         }
 
-        throw new EventException('事件必须为字符串或 EventInterface 实例');
+        throw new EventTypeErrorException;
     }
 
     /**
@@ -296,7 +296,7 @@ class Emitter
      * @param bool $once
      *
      * @return \One\Event\Contract\ListenerInterface
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\ListenerTypeErrorException
      */
     protected function ensureListener($listener, bool $once = false): ListenerInterface
     {
@@ -315,6 +315,6 @@ class Emitter
             return Reflection::newInstance($listener); // 创建失败将抛出 ReflectionException 异常
         }
 
-        throw new ListenerException('事件监听必须为类/方法名字符串、ListenerInterface 实例、Closure 或可回调数组类型。');
+        throw new ListenerTypeErrorException;
     }
 }

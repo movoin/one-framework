@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace One\Collection\Concern;
 
-use One\Exception\RuntimeException;
+use One\Collection\Exception\ContextValueNotFoundException;
 
 /**
  * 上下文容器 Getter&Setter 特征
@@ -30,7 +30,7 @@ trait HasContextGetter
      * @param string $name
      *
      * @return mixed
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Collection\Exception\ContextValueNotFoundException
      */
     public function __get(string $name)
     {
@@ -40,7 +40,7 @@ trait HasContextGetter
             return parent::__get($name);
         }
 
-        throw new RuntimeException("未定义: `{$name}`");
+        throw new ContextValueNotFoundException($name);
     }
 
     /**

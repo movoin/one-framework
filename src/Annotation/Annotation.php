@@ -21,8 +21,8 @@ use ReflectionProperty;
 use ReflectionException;
 use One\Annotation\Parser;
 use One\Annotation\AnnotationBag;
-use One\Annotation\Exception\ParseException;
-use One\Exception\RuntimeException;
+use One\Annotation\Exception\AnnotationParseErrorException;
+use One\Annotation\Exception\AnnotationTargetNotFoundException;
 
 /**
  * 注释读取类
@@ -49,17 +49,18 @@ class Annotation
     /**
      * 获得函数的 DocBlock
      *
-     * @param mixed $function
+     * @param mixed $func
      *
      * @return \One\Annotation\AnnotationBag
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Annotation\Exception\AnnotationTargetNotFoundException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
-    public function getFunction($function): AnnotationBag
+    public function getFunction($func): AnnotationBag
     {
         try {
-            $reflection = new ReflectionFunction($function);
+            $reflection = new ReflectionFunction($func);
         } catch (ReflectionException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+            throw AnnotationTargetNotFoundException::functionNotFound($func, $e);
         }
 
         return $this->getAnnotations($reflection);
@@ -71,14 +72,15 @@ class Annotation
      * @param mixed $class
      *
      * @return \One\Annotation\AnnotationBag
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Annotation\Exception\AnnotationTargetNotFoundException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     public function getClass($class): AnnotationBag
     {
         try {
             $reflection = new ReflectionClass($class);
         } catch (ReflectionException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+            throw AnnotationTargetNotFoundException::classNotFound($class, $e);
         }
 
         return $this->getAnnotations($reflection);
@@ -91,14 +93,15 @@ class Annotation
      * @param string $property
      *
      * @return \One\Annotation\AnnotationBag
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Annotation\Exception\AnnotationTargetNotFoundException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     public function getProperty($class, string $property): AnnotationBag
     {
         try {
             $reflection = new ReflectionProperty($class, $property);
         } catch (ReflectionException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+            throw AnnotationTargetNotFoundException::propertyNotFound($class, $property, $e);
         }
 
         return $this->getAnnotations($reflection);
@@ -111,14 +114,15 @@ class Annotation
      * @param string method
      *
      * @return \One\Annotation\AnnotationBag
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Annotation\Exception\AnnotationTargetNotFoundException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     public function getMethod($class, string $method): AnnotationBag
     {
         try {
             $reflection = new ReflectionMethod($class, $method);
         } catch (ReflectionException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+            throw AnnotationTargetNotFoundException::methodNotFound($class, $method, $e);
         }
 
         return $this->getAnnotations($reflection);
@@ -130,18 +134,13 @@ class Annotation
      * @param \Reflector $reflection
      *
      * @return \One\Annotation\AnnotationBag
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     public function getAnnotations(Reflector $reflection): AnnotationBag
     {
         $docblock = $reflection->getDocComment();
-
-        try {
-            $annotations = $this->parser->parse($docblock);
-            unset($docblock);
-        } catch (ParseException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
+        $annotations = $this->parser->parse($docblock);
+        unset($docblock);
 
         return new AnnotationBag($annotations);
     }

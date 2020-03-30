@@ -20,4 +20,24 @@ namespace One\Server\Contract;
  */
 interface MessageInterface
 {
+    /**
+     * 状态码
+     *
+     * @return int
+     */
+    public function getCode(): int;
+
+    /**
+     * 消息文本
+     *
+     * @return string
+     */
+    public function getMessage(): string;
+
+    /**
+     * 内容结果
+     *
+     * @return array
+     */
+    public function getResult(): array;
 }

@@ -62,7 +62,7 @@ class ListenerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Event\Exception\ListenerException
+     * @expectedException One\Event\Exception\ListenerTypeErrorException
      */
     public function testException()
     {

@@ -82,6 +82,7 @@ abstract class AbstractServer extends Container implements ServerInterface
             $this->getEmitter()->emit('server.start', $this->config->all());
 
             $this
+                ->getSwooleServer()
                 ->bindSwooleEvents()
                 ->bootProviders($this->getProviders())
                 ->bootStartItems()
@@ -132,18 +133,45 @@ abstract class AbstractServer extends Container implements ServerInterface
     }
 
     /**
-     * 绑定 Swoole Server 事件
-     *
-     * @return self
-     */
-    abstract protected function bindSwooleEvents(): self;
-
-    /**
      * 获得 Swoole Server
      *
      * @return \Swoole\Server
      */
     abstract protected function getSwooleServer(): Server;
+
+    /**
+     * 绑定 Swoole Server 事件
+     *
+     * @return self
+     */
+    protected function bindSwooleEvents(): self
+    {
+        $events = [
+            // Common
+            'Start', 'Shutdown', 'ManagerStart', 'WorkerStart', 'WorkerStop', 'WorkerError',
+            'WorkerExit', 'PipeMessage', 'Connect', 'Close',
+            // TCP
+            'Receive',
+            // UDP
+            'Packet',
+            // HTTP
+            'Request',
+            // WebSocket
+            'Open', 'Message',
+            // Async Tasks
+            'Task', 'Finish'
+        ];
+
+        array_map($events, function ($event) {
+            if (method_exists($this, "on{$event}")) {
+                $this->getSwooleServer()->on($event, "on{$event}");
+            }
+        });
+
+        unset($events);
+
+        return $this;
+    }
 
     /**
      * 初始化
@@ -156,6 +184,27 @@ abstract class AbstractServer extends Container implements ServerInterface
 
         // 注册核心组件
         $this->registerProviders([] + $this->providers);
+    }
+
+    /**
+     * 获得监听 URI 数组，包含 host 及 port
+     *
+     * @return array
+     */
+    protected function getListenUri(): array
+    {
+        $uri = [];
+
+        if (null !== ($listen = $this->config->get('listen'))) {
+            $uri = parse_url($listen);
+        }
+
+        unset($listen);
+
+        $uri['host'] = isset($uri['host']) ? $uri['host'] : static::DEFAULT_HOST;
+        $uri['port'] = isset($uri['port']) ? $uri['port'] : static::DEFAULT_PORT;
+
+        return $uri;
     }
 
     /**

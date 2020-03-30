@@ -15,7 +15,11 @@ namespace One\Filesystem;
 
 use One\Utility\Assert;
 use One\Filesystem\Filesystem;
-use One\Filesystem\Exception\FilesystemException;
+use One\Filesystem\Exception\FilesystemBadMethodCallException;
+use One\Filesystem\Exception\FilesystemMethodArgumentsUndefinedException;
+use One\Filesystem\Exception\FilesystemPrefixTypeErrorException;
+use One\Filesystem\Exception\FilesystemPathTypeErrorException;
+use One\Filesystem\Exception\FilesystemPrefixUndefinedException;
 
 /**
  * 文件系统管理类
@@ -82,7 +86,8 @@ class Manager
      *
      * @param array $filesystems
      *
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\AdapterPrefixNotExistsException
+     * @throws \One\Filesystem\Exception\AdapterPrefixTypeErrorException
      */
     public function __construct(array $filesystems = [])
     {
@@ -95,16 +100,12 @@ class Manager
      * @param  string $prefix
      *
      * @return \One\FileSystem\FileSystem
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixUndefinedException
      */
     public function getFileSystem(string $prefix): FileSystem
     {
         if (! isset($this->fs[$prefix])) {
-            throw new FilesystemException([
-                '文件系统 {adapter} 不存在' => [
-                    'adapter' => $prefix
-                ]
-            ]);
+            throw new FilesystemPrefixUndefinedException($prefix);
         }
 
         return $this->fs[$prefix];
@@ -116,7 +117,7 @@ class Manager
      * @param array $filesystems
      *
      * @return self
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixTypeErrorException
      */
     public function mountFilesystems(array $filesystems = []): self
     {
@@ -134,12 +135,12 @@ class Manager
      * @param \One\Filesystem\Filesystem $filesystem
      *
      * @return self
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixTypeErrorException
      */
     public function mountFilesystem(string $prefix, Filesystem $filesystem): self
     {
         if (! Assert::stringNotEmpty($prefix)) {
-            throw new FilesystemException('挂载失败，文件系统前缀必须为字符串且不能为空');
+            throw new FilesystemPrefixTypeErrorException;
         }
 
         $this->fs[$prefix] = $filesystem;
@@ -150,13 +151,15 @@ class Manager
     /**
      * 返回目录内容
      *
-     * !!! 请慎重使用，需要考虑到目录中的 inode 一旦过多，将会跑满磁盘 IO 的情况。
+     * !!! 请慎重使用，需要考虑到目录中的 inode 一旦过多，将会发生跑满磁盘 IO 的情况。
      * !!! 所以一定要注意目录管理，按年、月分级管理文件，将在一定程度上避免出现上述情况。
      *
      * @param  string $directory
      * @param  bool   $recursive
      *
      * @return array
+     * @throws \One\Filesystem\Exception\FilesystemPrefixUndefinedException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixTypeErrorException
      */
     public function listContents(string $directory = '', bool $recursive = false): array
     {
@@ -182,8 +185,8 @@ class Manager
      * @param  array  $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixUndefinedException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixTypeErrorException
      */
     public function copy(string $from, string $to, array $config = []): bool
     {
@@ -213,8 +216,8 @@ class Manager
      * @param  array  $config
      *
      * @return bool
-     * @throws \One\Filesystem\Exception\FilesystemException
-     * @throws \One\Filesystem\Exception\FileException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixTypeErrorException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixUndefinedException
      */
     public function move(string $from, string $to, array $config = []): bool
     {
@@ -248,15 +251,18 @@ class Manager
     /**
      * 调用适配器中的方法
      *
-     * @param  string $method
-     * @param  array  $arguments
+     * @param string $method
+     * @param array $arguments
      *
      * @return mixed
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemBadMethodCallException
+     * @throws \One\Filesystem\Exception\FilesystemMethodArgumentsUndefinedException
+     * @throws \One\Filesystem\Exception\FilesystemPathTypeErrorException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixUndefinedException
      */
     public function __call(string $method, array $arguments)
     {
-        list($prefix, $arguments) = $this->filterPrefix($arguments);
+        list($prefix, $arguments) = $this->filterPrefix($method, $arguments);
 
         $fs = $this->getFileSystem($prefix);
 
@@ -264,37 +270,31 @@ class Manager
             return call_user_func_array([$fs, $method], $arguments);
         }
 
-        $class = get_class($fs);
-
         unset($arguments, $fs);
 
-        throw new FilesystemException([
-            '文件系统 {adapter}: {class}::{$method}() 不存在' => [
-                'adapter' => $prefix,
-                'class' => $class,
-                'method' => __METHOD__
-            ]
-        ]);
+        throw new FilesystemBadMethodCallException($prefix, $method);
     }
 
     /**
      * 从参数中获得文件系统前缀
      *
-     * @param  array  $arguments
+     * @param string $method
+     * @param array $arguments
      *
      * @return array
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemMethodArgumentsUndefinedException
+     * @throws \One\Filesystem\Exception\FilesystemPathTypeErrorException
      */
-    protected function filterPrefix(array $arguments): array
+    protected function filterPrefix(string $method, array $arguments): array
     {
         if (empty($arguments)) {
-            throw new FilesystemException('参数不能为空');
+            throw new FilesystemMethodArgumentsUndefinedException($method);
         }
 
         $path = array_shift($arguments);
 
         if (! Assert::stringNotEmpty($path)) {
-            throw new FilesystemException('路径必须为字符串');
+            throw new FilesystemPathTypeErrorException;
         }
 
         list($prefix, $path) = $this->getPrefixAndPath($path);
@@ -310,12 +310,12 @@ class Manager
      * @param  string $path
      *
      * @return array
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FilesystemPrefixTypeErrorException
      */
     protected function getPrefixAndPath(string $path): array
     {
         if (! Assert::contains($path, '://')) {
-            throw new FilesystemException('未定义路径前缀');
+            throw new FilesystemPrefixTypeErrorException;
         }
 
         return explode('://', $path, 2);

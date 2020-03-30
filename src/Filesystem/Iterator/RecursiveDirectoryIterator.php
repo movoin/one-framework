@@ -16,7 +16,6 @@ namespace One\Filesystem\Iterator;
 use RecursiveIterator;
 use RecursiveArrayIterator;
 use UnexpectedValueException;
-use One\Exception\RuntimeException;
 use One\Filesystem\Iterator\FileInfo;
 
 /**

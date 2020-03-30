@@ -12,13 +12,36 @@
 
 namespace One\Collection\Exception;
 
-use One\Exception\RuntimeException;
+use Throwable;
+use One\Exception\NotExistsException;
 
 /**
- * 容器异常类
+ * 容器对象创建异常类 (200)
  *
  * @since 0.2
  */
-class ContainerException extends RuntimeException
+class ContainerException extends NotExistsException
 {
+    /**
+     * 代码: 200
+     *
+     * @var int
+     */
+    protected $code = 200;
+
+    /**
+     * 构造
+     *
+     * @param mixed $concrete
+     * @param \Throwable $previous
+     */
+    public function __construct($concrete, Throwable $previous = null)
+    {
+        parent::__construct(static::formatMessage(
+            '创建对象时出现容器错误 "{concrete}".',
+            [
+                'concrete' => (string) $concrete
+            ]
+        ));
+    }
 }

@@ -16,6 +16,9 @@ namespace One\Filesystem\Contract;
 /**
  * 文件系统适配器接口
  *
+ * !!! 扩展接口时，请务必确保方法的第一个参数为 string $path 路径参数（名称随意），
+ * !!! 否则在 Manager 中将出现不可预期的问题。详见（@see Manager::filterPrefix())
+ *
  * @since 0.2
  */
 interface AdapterInterface

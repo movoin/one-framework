@@ -61,7 +61,7 @@ class Parser
      * @param string $docblock
      *
      * @return array
-     * @throws \One\Annotation\Exception\ParseException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     public function parse(string $docblock): array
     {
@@ -84,7 +84,7 @@ class Parser
      * @param string $str
      *
      * @return array
-     * @throws \One\Annotation\Exception\ParseException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     protected function parseAnnotations(string $str): array
     {
@@ -106,7 +106,7 @@ class Parser
      * @param string $value
      *
      * @return mixed
-     * @throws \One\Annotation\Exception\ParseException
+     * @throws \One\Annotation\Exception\AnnotationParseErrorException
      */
     protected function parseValue(string $value)
     {

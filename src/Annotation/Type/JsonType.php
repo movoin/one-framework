@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace One\Annotation\Type;
 
 use One\Annotation\Contract\TypeInterface;
-use One\Annotation\Exception\ParseException;
+use One\Annotation\Exception\AnnotationParseErrorException;
 use One\Utility\Encode\Json;
 use One\Utility\Encode\Exception\EncodeException;
 
@@ -37,7 +37,7 @@ class JsonType implements TypeInterface
         try {
             $json = Json::decode($value);
         } catch (EncodeException $e) {
-            throw new ParseException(__CLASS__, $e->getMessage(), $e->getCode(), $e);
+            throw new AnnotationParseErrorException($value, '必须为 JSON 类型');
         }
 
         return $json;

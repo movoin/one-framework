@@ -20,8 +20,8 @@ use AppendIterator;
 use IteratorAggregate;
 use CallbackFilterIterator;
 use RecursiveIteratorIterator;
-use One\Filesystem\Exception\DirectoryException;
-use One\Filesystem\Exception\FilesystemException;
+use One\Filesystem\Exception\DirectoryNotExistsException;
+use One\Filesystem\Exception\FindInPathUndefinedException;
 use One\Filesystem\Iterator\FileInfo;
 use One\Filesystem\Iterator\RecursiveDirectoryIterator;
 use One\Filesystem\Iterator\ExcludeDirectoryFilterIterator;
@@ -187,7 +187,7 @@ class Finder implements IteratorAggregate, Countable
      * @param array|string $dirs
      *
      * @return self
-     * @throws \One\Filesystem\Exception\DirectoryException
+     * @throws \One\Filesystem\Exception\DirectoryNotExistsException
      */
     public function in($dirs): self
     {
@@ -200,11 +200,7 @@ class Finder implements IteratorAggregate, Countable
                 sort($glob);
                 $resolvedDirs = array_merge($resolvedDirs, array_map([$this, 'normalizeDir'], $glob));
             } else {
-                throw new DirectoryException([
-                    '目录 "{dir}" 不存在' => [
-                        'dir' => $dir
-                    ]
-                ]);
+                throw new DirectoryNotExistsException($dir);
             }
         }
 
@@ -241,12 +237,12 @@ class Finder implements IteratorAggregate, Countable
      * 迭代结果
      *
      * @return \Iterator
-     * @throws \One\Filesystem\Exception\FilesystemException
+     * @throws \One\Filesystem\Exception\FindInPathUndefinedException
      */
     public function getIterator(): Iterator
     {
         if (0 === count($this->dirs)) {
-            throw new FilesystemException('必须设置查询目录 in()');
+            throw new FindInPathUndefinedException;
         }
 
         if (1 === count($this->dirs)) {

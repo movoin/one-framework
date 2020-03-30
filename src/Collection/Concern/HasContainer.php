@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace One\Collection\Concern;
 
 use One\Collection\Container;
-use One\Exception\RuntimeException;
 
 /**
  * 对象容器特征

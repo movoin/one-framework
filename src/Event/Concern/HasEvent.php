@@ -53,8 +53,8 @@ trait HasEvent
      * @param int $priority
      *
      * @return self
-     * @throws \One\Event\Exception\EventException
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\EventInvalidArgumentException
+     * @throws \One\Event\Exception\ListenerInvalidArgumentException
      */
     public function on($event, $listener, int $priority = Emitter::PRI_NORMAL): self
     {
@@ -71,8 +71,8 @@ trait HasEvent
      * @param int $priority
      *
      * @return self
-     * @throws \One\Event\Exception\EventException
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\EventInvalidArgumentException
+     * @throws \One\Event\Exception\ListenerInvalidArgumentException
      */
     public function once($event, $listener, int $priority = Emitter::PRI_NORMAL): self
     {
@@ -87,7 +87,7 @@ trait HasEvent
      * @param \One\Event\Contract\EventInterface|string $event
      *
      * @return self
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventInvalidArgumentException
      */
     public function off($event): self
     {
@@ -103,7 +103,7 @@ trait HasEvent
      * @param array $parameters
      *
      * @return void
-     * @throws \One\Event\Exception\EventException
+     * @throws \One\Event\Exception\EventInvalidArgumentException
      */
     public function emit($event, array $parameters = []): void
     {

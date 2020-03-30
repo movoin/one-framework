@@ -60,7 +60,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Collection\Exception\ContainerException
+     * @expectedException One\Collection\Exception\ContainerValueNotFoundException
      */
     public function testGetObjectException()
     {

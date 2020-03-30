@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace One\Filesystem\Iterator;
 
 use SplFileInfo;
-use One\Exception\RuntimeException;
+use One\Filesystem\Exception\FileReadFailureException;
 
 /**
  * 文件信息对象
@@ -85,19 +85,15 @@ class FileInfo extends SplFileInfo
      * 获得文件内容
      *
      * @return string
-     * @throws \One\Exception\RuntimeException
+     * @throws \One\Filesystem\Exception\FileReadFailureException
      */
     public function getContents(): string
     {
-        set_error_handler(function ($type, $msg) use (&$error) { $error = $msg; });
-
         $content = file_get_contents($this->getPathname());
-
-        restore_error_handler();
 
         if (false === $content) {
             // @codeCoverageIgnoreStart
-            throw new RuntimeException($error);
+            throw new FileReadFailureException($this->getFilename());
             // @codeCoverageIgnoreEnd
         }
 

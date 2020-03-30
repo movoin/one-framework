@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace One\Event;
 
-use Closure;
 use One\Event\Contract\EventInterface;
 use One\Event\Contract\ListenerInterface;
-use One\Event\Exception\ListenerException;
+use One\Event\Exception\ListenerTypeErrorException;
 use One\Utility\Assert;
 
 /**
@@ -38,7 +37,7 @@ class Listener implements ListenerInterface
      *
      * @param \Closure|array $handler
      *
-     * @throws One\Event\Exception\ListenerException
+     * @throws One\Event\Exception\ListenerTypeErrorException
      */
     public function __construct($handler = null)
     {
@@ -75,14 +74,14 @@ class Listener implements ListenerInterface
      * @param \Closure|array $handler
      *
      * @return void
-     * @throws \One\Event\Exception\ListenerException
+     * @throws \One\Event\Exception\ListenerTypeErrorException
      */
     public function setHandler($handler): void
     {
         if (Assert::array($handler) || Assert::instanceOf($handler, '\\Closure')) {
             $this->handler = $handler;
         } else {
-            throw new ListenerException('设置失败，事件响应句柄必须为 `Closure` 或 可回调数组类型!');
+            throw new ListenerTypeErrorException;
         }
     }
 

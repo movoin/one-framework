@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace One\Annotation\Type;
 
 use One\Annotation\Contract\TypeInterface;
-use One\Annotation\Exception\ParseException;
 
 /**
  * 字符串类型

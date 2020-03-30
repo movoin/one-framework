@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace One\Annotation\Type;
 
 use One\Annotation\Contract\TypeInterface;
-use One\Annotation\Exception\ParseException;
+use One\Annotation\Exception\AnnotationParseErrorException;
 
 /**
  * 整型数值类型
@@ -33,7 +33,7 @@ class IntegerType implements TypeInterface
     public function parse(string $value)
     {
         if (false === ($value = filter_var($value, FILTER_VALIDATE_INT))) {
-            throw new ParseException(__CLASS__, '必须为数值类型');
+            throw new AnnotationParseErrorException((string) $value, '必须为 Integer 类型');
         }
 
         return (int) $value;

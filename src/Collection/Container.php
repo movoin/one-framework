@@ -16,6 +16,7 @@ namespace One\Collection;
 use Closure;
 use ReflectionException;
 use One\Collection\Exception\ContainerException;
+use One\Collection\Exception\ContainerValueNotFoundException;
 use One\Utility\Reflection;
 
 /**
@@ -65,6 +66,7 @@ class Container
      *
      * @return object
      * @throws \One\Collection\Exception\ContainerException
+     * @throws \One\Collection\Exception\ContainerValueNotFoundException
      */
     public function get(string $id): object
     {
@@ -72,10 +74,7 @@ class Container
             return $this->make($id);
         }
 
-        throw new ContainerException(sprintf(
-            '"%s" 未在容器中定义',
-            trim($id)
-        ));
+        throw new ContainerValueNotFoundException(trim($id));
     }
 
     /**
@@ -163,11 +162,7 @@ class Container
         try {
             $object = Reflection::newInstance($concrete, $parameters);
         } catch (ReflectionException $e) {
-            throw new ContainerException(
-                sprintf('检索时出现容器错误 "%s"', $concrete),
-                $e->getCode(),
-                $e
-            );
+            throw new ContainerException($concrete, $e);
         }
 
         return $object;
