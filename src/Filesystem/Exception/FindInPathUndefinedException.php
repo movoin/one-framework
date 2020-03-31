@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\InvalidArgumentException;
 
 /**
- * 查询路径未定义异常类 (314)
+ * 查询路径未定义异常类 (1513)
  *
  * @since 0.2
  */
 class FindInPathUndefinedException extends InvalidArgumentException
 {
     /**
-     * 代码: 314
+     * 代码: 1513
      *
      * @var int
      */
-    protected $code = 314;
+    protected $code = 1513;
 
     /**
      * 构造

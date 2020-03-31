@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace One\Console;
 
 use One\Console\ConfigLoader;
+use One\Encoder\Json;
 use One\Filesystem\Finder;
 use One\Filesystem\Iterator\FileInfo;
-use One\Utility\Encode\Json;
 use One\Utility\Helper\ArrayHelper;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;

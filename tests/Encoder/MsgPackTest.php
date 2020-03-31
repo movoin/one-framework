@@ -6,15 +6,14 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Tests\Utility\Encode
+ * @package     One\Tests\Encoder
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Tests\Utility\Encode;
+namespace One\Tests\Encoder;
 
-use MessagePack\PackOptions;
-use One\Utility\Encode\MsgPack;
+use One\Encoder\MsgPack;
 
 class MsgPackTest extends \PHPUnit\Framework\TestCase
 {
@@ -31,15 +30,15 @@ class MsgPackTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\EncodeException
      */
     public function testPackInvalidOptionException()
     {
-        MsgPack::pack('test', PackOptions::FORCE_STR | PackOptions::FORCE_BIN);
+        MsgPack::pack('test', MsgPack::FORCE_STR | MsgPack::FORCE_BIN);
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\EncodeException
      */
     public function testPackingFailedException()
     {
@@ -47,15 +46,15 @@ class MsgPackTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\DecodeException
      */
     public function testUnPackInvalidOptionException()
     {
-        MsgPack::unpack(MsgPack::pack('foobar'), PackOptions::FORCE_STR | PackOptions::FORCE_BIN);
+        MsgPack::unpack(MsgPack::pack('foobar'), MsgPack::FORCE_STR | MsgPack::FORCE_BIN);
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\DecodeException
      */
     public function testUnpackingFailedException()
     {

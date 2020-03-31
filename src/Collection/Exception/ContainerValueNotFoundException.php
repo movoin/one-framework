@@ -16,18 +16,18 @@ namespace One\Collection\Exception;
 use One\Exception\NotFoundException;
 
 /**
- * 容器值对象未找到 (201)
+ * 容器值对象未找到 (1201)
  *
  * @since 0.2
  */
 class ContainerValueNotFoundException extends NotFoundException
 {
     /**
-     * 代码: 201
+     * 代码: 1201
      *
      * @var int
      */
-    protected $code = 201;
+    protected $code = 1201;
 
     /**
      * 构造

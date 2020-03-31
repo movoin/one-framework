@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\BadMethodCallException;
 
 /**
- * 文件系统非法方法调用异常类 (308)
+ * 文件系统非法方法调用异常类 (1507)
  *
  * @since 0.2
  */
 class FilesystemBadMethodCallException extends BadMethodCallException
 {
     /**
-     * 代码: 308
+     * 代码: 1507
      *
      * @var int
      */
-    protected $code = 308;
+    protected $code = 1507;
 
     /**
      * 构造

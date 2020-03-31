@@ -18,16 +18,16 @@ use One\Utility\Assert;
 use One\Exception\NotFoundException;
 
 /**
- * 注释解析错误异常类 (101 ~ 104)
+ * 注释解析错误异常类 (1101 ~ 1104)
  *
  * @since 0.2
  */
 class AnnotationTargetNotFoundException extends NotFoundException
 {
-    const CODE_FUNC = 101;
-    const CODE_CLASS = 102;
-    const CODE_PROPERTY = 103;
-    const CODE_METHOD = 104;
+    const CODE_FUNC = 1101;
+    const CODE_CLASS = 1102;
+    const CODE_PROPERTY = 1103;
+    const CODE_METHOD = 1104;
 
     /**
      * 函数未找到 (1001)

@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\TypeErrorException;
 
 /**
- * 文件系统前缀类型错误异常 (312)
+ * 文件系统前缀类型错误异常 (1511)
  *
  * @since 0.2
  */
 class FilesystemPrefixTypeErrorException extends TypeErrorException
 {
     /**
-     * 代码: 312
+     * 代码: 1511
      *
      * @var int
      */
-    protected $code = 312;
+    protected $code = 1511;
 
     /**
      * 构造

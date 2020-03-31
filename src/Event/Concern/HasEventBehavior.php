@@ -48,7 +48,7 @@ trait HasEventBehavior
             $handler = $method->getName();
             $event = $this->convertToEventName($handler);
 
-            $this->getEmitter()->on($event, $handler);
+            $this->getEmitter()->on($event, [$this, $handler]);
 
             unset($handler, $event);
         });

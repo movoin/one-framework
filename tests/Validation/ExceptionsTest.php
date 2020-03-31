@@ -31,7 +31,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider provideFailsRules
-     * @expectedException One\Validation\Exception\ValidationException
+     * @expectedException One\Validation\Exception\ValidationInvalidArgumentException
      */
     public function testValidateException(array $attributes, array $rule)
     {
@@ -91,27 +91,25 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @dataProvider provideFailsValidators
-     * @expectedException One\Validation\Exception\ValidationException
+     * @expectedException One\Validation\Exception\ValidationRuleExistsException
      */
-    public function testAddValidatorException($name, $validator)
+    public function testValidationRuleExistsException()
     {
-        $this->validator->reset();
-        $this->validator->addRule($name, $validator);
-    }
-
-    public function provideFailsValidators()
-    {
-        return [
-            [ 'int', false ],
-            [ 'bad', false ],
-        ];
+        $this->validator->addRule('int', function () {});
     }
 
     /**
-     * @expectedException One\Validation\Exception\ValidationException
+     * @expectedException One\Validation\Exception\ValidationRuleMustBeCallableException
      */
-    public function testCreateValidatorException()
+    public function testValidationRuleMustBeCallableException()
+    {
+        $this->validator->addRule('new', false);
+    }
+
+    /**
+     * @expectedException One\Validation\Exception\ValidationRuleNotExistsException
+     */
+    public function testValidationRuleNotExistsException()
     {
         $this->validator->reset();
         $this->validator->getRuleInstance('bad');

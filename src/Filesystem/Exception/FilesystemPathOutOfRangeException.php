@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\LogicException;
 
 /**
- * 文件系统路径超出目录范围异常 (310)
+ * 文件系统路径超出目录范围异常 (1509)
  *
  * @since 0.2
  */
 class FilesystemPathOutOfRangeException extends LogicException
 {
     /**
-     * 代码: 310
+     * 代码: 1509
      *
      * @var int
      */
-    protected $code = 310;
+    protected $code = 1509;
 
     /**
      * 构造

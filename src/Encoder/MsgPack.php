@@ -6,12 +6,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Utility\Encode
+ * @package     One\Encoder
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Utility\Encode;
+namespace One\Encoder;
 
 use MessagePack\Packer;
 use MessagePack\BufferUnpacker;
@@ -19,7 +19,8 @@ use MessagePack\PackOptions;
 use MessagePack\Exception\InvalidOptionException;
 use MessagePack\Exception\PackingFailedException;
 use MessagePack\Exception\UnpackingFailedException;
-use One\Utility\Encode\Exception\EncodeException;
+use One\Encoder\Exception\DecodeException;
+use One\Encoder\Exception\EncodeException;
 
 /**
  * MessagePack 编码类
@@ -28,6 +29,15 @@ use One\Utility\Encode\Exception\EncodeException;
  */
 class MsgPack
 {
+    public const FORCE_STR = PackOptions::FORCE_STR;
+    public const FORCE_BIN = PackOptions::FORCE_BIN;
+    public const DETECT_STR_BIN = PackOptions::DETECT_STR_BIN;
+    public const FORCE_ARR = PackOptions::FORCE_ARR;
+    public const FORCE_MAP = PackOptions::FORCE_MAP;
+    public const DETECT_ARR_MAP = PackOptions::DETECT_ARR_MAP;
+    public const FORCE_FLOAT32 = PackOptions::FORCE_FLOAT32;
+    public const FORCE_FLOAT64 = PackOptions::FORCE_FLOAT64;
+
     /**
      * @codeCoverageIgnore
      */
@@ -41,20 +51,20 @@ class MsgPack
      * @static
      *
      * @param mixed $value
-     * @param \MessagePack\PackOptions|int|null $options
+     * @param int|null $options
      *
      * @return string
-     * @throws \One\Utility\Encode\Exception\EncodeException
+     * @throws \One\Encoder\Exception\EncodeException
      */
-    public static function pack($value, $options = null): string
+    public static function pack($value, ?int $options = null): string
     {
         try {
             $packer = new Packer($options);
             $data = $packer->pack($value);
         } catch (InvalidOptionException $e) {
-            throw new EncodeException('MsgPack', $e->getMessage(), $e->getCode(), $e);
+            throw new EncodeException('MsgPack', $e->getMessage(), $e);
         } catch (PackingFailedException $e) {
-            throw new EncodeException('MsgPack', $e->getMessage(), $e->getCode(), $e);
+            throw new EncodeException('MsgPack', $e->getMessage(), $e);
         }
 
         unset($packer);
@@ -68,20 +78,20 @@ class MsgPack
      * @static
      *
      * @param string $data
-     * @param \MessagePack\PackOptions|int|null $options
+     * @param int|null $options
      *
      * @return mixed
-     * @throws \One\Utility\Encode\Exception\EncodeException
+     * @throws \One\Encoder\Exception\DecodeException
      */
-    public static function unpack(string $data, $options = null)
+    public static function unpack(string $data, ?int $options = null)
     {
         try {
             $unpacker = new BufferUnpacker($data, $options);
             $unpacked = $unpacker->unpack();
         } catch (InvalidOptionException $e) {
-            throw new EncodeException('MsgPack', $e->getMessage(), $e->getCode(), $e);
+            throw new DecodeException('MsgPack', $e->getMessage(), $e);
         } catch (UnpackingFailedException $e) {
-            throw new EncodeException('MsgPack', $e->getMessage(), $e->getCode(), $e);
+            throw new DecodeException('MsgPack', $e->getMessage(), $e);
         }
 
         unset($unpacker);

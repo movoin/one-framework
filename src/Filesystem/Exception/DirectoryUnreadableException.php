@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\LogicException;
 
 /**
- * 目录不可读异常类 (304)
+ * 目录不可读异常类 (1503)
  *
  * @since 0.2
  */
 class DirectoryUnreadableException extends LogicException
 {
     /**
-     * 代码: 304
+     * 代码: 1503
      *
      * @var int
      */
-    protected $code = 304;
+    protected $code = 1503;
 
     /**
      * 构造

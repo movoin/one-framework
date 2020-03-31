@@ -48,7 +48,7 @@ trait HasContextGetter
      *
      * @param string $name
      *
-     * @return mixed
+     * @return void
      */
     public function __set(string $name, $value): void
     {

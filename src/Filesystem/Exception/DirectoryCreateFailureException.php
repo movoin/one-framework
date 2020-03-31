@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\LogicException;
 
 /**
- * 目录创建失败异常类 (300)
+ * 目录创建失败异常类 (1500)
  *
  * @since 0.2
  */
 class DirectoryCreateFailureException extends LogicException
 {
     /**
-     * 代码: 300
+     * 代码: 1500
      *
      * @var int
      */
-    protected $code = 300;
+    protected $code = 1500;
 
     /**
      * 构造

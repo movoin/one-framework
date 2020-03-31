@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace One\Validation\Rule;
 
 use One\Validation\Rule\AbstractRule;
-use One\Validation\Exception\ValidationException;
+use One\Validation\Exception\ValidationInvalidArgumentException;
 
 /**
  * 规则：字符串长度
@@ -57,11 +57,11 @@ class LengthRule extends AbstractRule
      * 校验规则
      *
      * @param array $attributes 校验数据
-     * @param string $name      校验规则名称
+     * @param string $name 校验规则名称
      * @param array $parameters 校验参数
      *
      * @return bool
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationInvalidArgumentException
      */
     public function validate(array $attributes, string $name, array $parameters = []): bool
     {
@@ -69,7 +69,7 @@ class LengthRule extends AbstractRule
             ! isset($parameters['min']) &&
             ! isset($parameters['max'])
         ) {
-            throw new ValidationException('is, min, max 中必须填写其中一项');
+            throw new ValidationInvalidArgumentException(static::getNames(), 'is, min, max', '必须填写其中一项');
         }
 
         $len = mb_strlen($attributes[$name]);

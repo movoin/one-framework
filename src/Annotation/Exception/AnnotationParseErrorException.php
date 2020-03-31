@@ -16,18 +16,18 @@ namespace One\Annotation\Exception;
 use One\Exception\ParseErrorException;
 
 /**
- * 注释解析错误异常类 (100)
+ * 注释解析错误异常类 (1000)
  *
  * @since 0.2
  */
 class AnnotationParseErrorException extends ParseErrorException
 {
     /**
-     * 代码: 100
+     * 代码: 1000
      *
      * @var int
      */
-    protected $code = 100;
+    protected $code = 1000;
 
     /**
      * 构造

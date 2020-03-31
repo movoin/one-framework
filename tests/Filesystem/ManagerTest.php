@@ -89,26 +89,26 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider exceptionProvider
-     * @expectedException One\Filesystem\Exception\FilesystemException
      */
-    public function testExceptions($method, $params)
+    public function testExceptions($method, $attributes, $exception)
     {
-        call_user_func_array([$this->fm, $method], $params);
+        $this->expectException('\\One\\Filesystem\\Exception\\' . $exception);
+
+        call_user_func_array([$this->fm, $method], $attributes);
     }
 
     public function exceptionProvider()
     {
         return [
-            ['getFilesystem', ['bad']],
+            ['getFilesystem', ['bad'], 'FilesystemPrefixUndefinedException'],
             ['mountFilesystem', ['', new Filesystem(
                 new Local(__DIR__ . '/Fixtures'),
                 ['visibility' => 'public']
-            )]],
-            ['exists', []],
-            ['bad', ['foo']],
-            ['bad', ['foo://file']],
-            ['bad', [[]]],
-            ['read', ['test']],
+            )], 'FilesystemPrefixTypeErrorException'],
+            ['exists', [], 'FilesystemMethodArgumentsUndefinedException'],
+            ['bad', ['foo'], 'FilesystemPrefixTypeErrorException'],
+            ['bad', ['foo://file'], 'FilesystemBadMethodCallException'],
+            ['bad', [[]], 'FilesystemPathTypeErrorException'],
         ];
     }
 }

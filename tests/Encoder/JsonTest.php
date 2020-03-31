@@ -6,14 +6,14 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Tests\Utility\Encode
+ * @package     One\Tests\Encoder
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Tests\Utility\Encode;
+namespace One\Tests\Encoder;
 
-use One\Utility\Encode\Json;
+use One\Encoder\Json;
 
 class JsonTest extends \PHPUnit\Framework\TestCase
 {
@@ -30,7 +30,7 @@ class JsonTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\EncodeException
      */
     public function testEncodeException()
     {
@@ -50,7 +50,7 @@ class JsonTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\DecodeException
      */
     public function testDecodeException()
     {
@@ -65,7 +65,7 @@ class JsonTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Utility\Encode\Exception\EncodeException
+     * @expectedException One\Encoder\Exception\DecodeException
      */
     public function testReadFileException()
     {

@@ -16,18 +16,18 @@ namespace One\Collection\Exception;
 use One\Exception\NotFoundException;
 
 /**
- * 上下文值未找到 (202)
+ * 上下文值未找到 (1202)
  *
  * @since 0.2
  */
 class ContextValueNotFoundException extends NotFoundException
 {
     /**
-     * 代码: 202
+     * 代码: 1202
      *
      * @var int
      */
-    protected $code = 202;
+    protected $code = 1202;
 
     /**
      * 构造

@@ -16,18 +16,18 @@ namespace One\Event\Exception;
 use One\Exception\TypeErrorException;
 
 /**
- * 事件类型错误异常类 (300)
+ * 事件类型错误异常类 (1400)
  *
  * @since 0.2
  */
 class EventTypeErrorException extends TypeErrorException
 {
     /**
-     * 代码: 300
+     * 代码: 1400
      *
      * @var int
      */
-    protected $code = 300;
+    protected $code = 1400;
 
     /**
      * 构造

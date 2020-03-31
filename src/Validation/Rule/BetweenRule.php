@@ -15,7 +15,7 @@ namespace One\Validation\Rule;
 
 use One\Utility\Assert;
 use One\Validation\Rule\AbstractRule;
-use One\Validation\Exception\ValidationException;
+use One\Validation\Exception\ValidationInvalidArgumentException;
 
 /**
  * 规则：数组
@@ -56,20 +56,20 @@ class BetweenRule extends AbstractRule
      * 校验规则
      *
      * @param array $attributes 校验数据
-     * @param string $name      校验规则名称
+     * @param string $name 校验规则名称
      * @param array $parameters 校验参数
      *
      * @return bool
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationInvalidArgumentException
      */
     public function validate(array $attributes, string $name, array $parameters = []): bool
     {
         if (! isset($parameters['min'])) {
-            throw new ValidationException('允许最小值必须设置');
+            throw new ValidationInvalidArgumentException(static::getNames(), 'min');
         }
 
         if (! isset($parameters['max'])) {
-            throw new ValidationException('允许最大值必须设置');
+            throw new ValidationInvalidArgumentException(static::getNames(), 'max');
         }
 
         if (Assert::range($attributes[$name], $parameters['min'], $parameters['max'])) {

@@ -16,18 +16,18 @@ use Throwable;
 use One\Exception\NotExistsException;
 
 /**
- * 容器对象创建异常类 (200)
+ * 容器对象创建异常类 (1200)
  *
  * @since 0.2
  */
 class ContainerException extends NotExistsException
 {
     /**
-     * 代码: 200
+     * 代码: 1200
      *
      * @var int
      */
-    protected $code = 200;
+    protected $code = 1200;
 
     /**
      * 构造

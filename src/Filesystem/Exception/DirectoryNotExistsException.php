@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\LogicException;
 
 /**
- * 目录不存在异常类 (302)
+ * 目录不存在异常类 (1502)
  *
  * @since 0.2
  */
 class DirectoryNotExistsException extends LogicException
 {
     /**
-     * 代码: 302
+     * 代码: 1502
      *
      * @var int
      */
-    protected $code = 302;
+    protected $code = 1502;
 
     /**
      * 构造

@@ -6,14 +6,15 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package     One\Utility\Encode
+ * @package     One\Encoder
  * @author      Allen Luo <movoin@gmail.com>
  * @since       0.2
  */
 
-namespace One\Utility\Encode;
+namespace One\Encoder;
 
-use One\Utility\Encode\Exception\EncodeException;
+use One\Encoder\Exception\DecodeException;
+use One\Encoder\Exception\EncodeException;
 
 /**
  * Json 编码类
@@ -39,7 +40,7 @@ class Json
      * @param int $depth
      *
      * @return string
-     * @throws \One\Utility\Encode\Exception\EncodeException
+     * @throws \One\Encoder\Exception\EncodeException
      */
     public static function encode(
         $value,
@@ -49,8 +50,8 @@ class Json
     {
         $json = json_encode($value, $options, $depth);
 
-        if (JSON_ERROR_NONE !== ($error = json_last_error())) {
-            throw new EncodeException('Json', json_last_error_msg(), $error);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new EncodeException('Json', json_last_error_msg());
         }
 
         return $json;
@@ -67,7 +68,7 @@ class Json
      * @param int $options
      *
      * @return mixed
-     * @throws \One\Utility\Encode\Exception\EncodeException
+     * @throws \One\Encoder\Exception\DecodeException
      */
     public static function decode(
         string $json,
@@ -77,8 +78,8 @@ class Json
     ) {
         $data = json_decode($json, $assoc, $depth, $options);
 
-        if (JSON_ERROR_NONE !== ($error = json_last_error())) {
-            throw new EncodeException('Json', json_last_error_msg(), $error);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new DecodeException('Json', json_last_error_msg());
         }
 
         return $data;
@@ -93,7 +94,7 @@ class Json
      * @param int $options
      *
      * @return mixed
-     * @throws \One\Utility\Encode\Exception\EncodeException
+     * @throws \One\Encoder\Exception\DecodeException
      */
     public static function readFile(
         string $filepath,
@@ -107,6 +108,6 @@ class Json
             return static::decode($json, $assoc, $depth, $options);
         }
 
-        throw new EncodeException('Json', "未找到文件：$filepath");
+        throw new DecodeException('Json', "未找到文件: $filepath");
     }
 }

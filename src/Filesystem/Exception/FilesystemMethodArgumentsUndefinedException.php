@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\InvalidArgumentException;
 
 /**
- * 文件系统方法参数未定义异常 (309)
+ * 文件系统方法参数未定义异常 (1508)
  *
  * @since 0.2
  */
 class FilesystemMethodArgumentsUndefinedException extends InvalidArgumentException
 {
     /**
-     * 代码: 309
+     * 代码: 1508
      *
      * @var int
      */
-    protected $code = 309;
+    protected $code = 1508;
 
     /**
      * 构造

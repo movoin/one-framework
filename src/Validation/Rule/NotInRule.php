@@ -16,7 +16,7 @@ namespace One\Validation\Rule;
 use One\Utility\Assert;
 use One\Utility\Helper\ArrayHelper;
 use One\Validation\Rule\AbstractRule;
-use One\Validation\Exception\ValidationException;
+use One\Validation\Exception\ValidationInvalidArgumentException;
 
 /**
  * 规则：不包含
@@ -58,16 +58,16 @@ class NotInRule extends AbstractRule
      * 校验规则
      *
      * @param array $attributes 校验数据
-     * @param string $name      校验规则名称
+     * @param string $name 校验规则名称
      * @param array $parameters 校验参数
      *
      * @return bool
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationInvalidArgumentException
      */
     public function validate(array $attributes, string $name, array $parameters = []): bool
     {
         if (! isset($parameters['range'])) {
-            throw new ValidationException('range 参数未设置');
+            throw new ValidationInvalidArgumentException(static::getNames(), 'range');
         }
 
         if (! Assert::oneOf($attributes[$name], ArrayHelper::wrap($parameters['range']))) {

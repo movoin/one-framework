@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\InvalidArgumentException;
 
 /**
- * 文件系统适配器前缀未定义异常类 (313)
+ * 文件系统适配器前缀未定义异常类 (1512)
  *
  * @since 0.2
  */
 class FilesystemPrefixUndefinedException extends InvalidArgumentException
 {
     /**
-     * 代码: 313
+     * 代码: 1512
      *
      * @var int
      */
-    protected $code = 313;
+    protected $code = 1512;
 
     /**
      * 构造

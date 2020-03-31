@@ -16,18 +16,18 @@ namespace One\Event\Exception;
 use One\Exception\TypeErrorException;
 
 /**
- * 事件响应句柄设置异常 (301)
+ * 事件响应句柄设置异常 (1401)
  *
  * @since 0.2
  */
 class ListenerTypeErrorException extends TypeErrorException
 {
     /**
-     * 代码: 301
+     * 代码: 1401
      *
      * @var int
      */
-    protected $code = 301;
+    protected $code = 1401;
 
     /**
      * 构造

@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\LogicException;
 
 /**
- * 目录已存在异常类 (301)
+ * 目录已存在异常类 (1501)
  *
  * @since 0.2
  */
 class DirectoryExistsException extends LogicException
 {
     /**
-     * 代码: 301
+     * 代码: 1501
      *
      * @var int
      */
-    protected $code = 301;
+    protected $code = 1501;
 
     /**
      * 构造

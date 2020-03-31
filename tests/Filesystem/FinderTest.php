@@ -96,7 +96,7 @@ class FinderTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Filesystem\Exception\FilesystemException
+     * @expectedException One\Filesystem\Exception\FindInPathUndefinedException
      */
     public function testFilesystemExceptions()
     {
@@ -105,7 +105,7 @@ class FinderTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Filesystem\Exception\DirectoryException
+     * @expectedException One\Filesystem\Exception\DirectoryNotExistsException
      * @dataProvider dirExceptions
      */
     public function testDirectoryExceptions($method, $params)

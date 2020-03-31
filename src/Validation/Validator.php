@@ -16,7 +16,9 @@ namespace One\Validation;
 use One\Utility\Assert;
 use One\Utility\Reflection;
 use One\Validation\Contract\RuleInterface;
-use One\Validation\Exception\ValidationException;
+use One\Validation\Exception\ValidationRuleExistsException;
+use One\Validation\Exception\ValidationRuleMustBeCallableException;
+use One\Validation\Exception\ValidationRuleNotExistsException;
 use One\Validation\Rule\CustomRule;
 
 /**
@@ -125,7 +127,8 @@ class Validator
      * @param array $attributes
      *
      * @return bool
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationInvalidArgumentException
+     * @throws \One\Validation\Exception\ValidationRuleNotExistsException
      */
     public function validate(array $attributes): bool
     {
@@ -149,7 +152,8 @@ class Validator
      * @param array $parameters
      *
      * @return bool
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationInvalidArgumentException
+     * @throws \One\Validation\Exception\ValidationRuleNotExistsException
      */
     public function validateValue(array $attributes, array $names, array $parameters): bool
     {
@@ -215,15 +219,16 @@ class Validator
      * @param array $rule
      *
      * @return void
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationRuleExistsException
+     * @throws \One\Validation\Exception\ValidationRuleMustBeCallableException
      */
     public function addRule(string $name, $rule): void
     {
         if ($this->hasRule($name)) {
-            throw new ValidationException($name, "规则已被定义");
+            throw new ValidationRuleExistsException($name);
         }
         if (! $this->isCustomRule($rule)) {
-            throw new ValidationException($name, "规则必须可回调");
+            throw new ValidationRuleMustBeCallableException($name);
         }
 
         $this->customRules[$name] = $rule;
@@ -235,7 +240,7 @@ class Validator
      * @param string $name
      *
      * @return \One\Validation\Contract\RuleInterface
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationRuleNotExistsException
      */
     public function getRuleInstance(string $name): RuleInterface
     {
@@ -259,7 +264,7 @@ class Validator
             }
         }
 
-        throw new ValidationException($name, "校验规则未定义");
+        throw new ValidationRuleNotExistsException($name);
     }
 
     /**
@@ -364,7 +369,7 @@ class Validator
     /**
      * 判断是否自定义规则
      *
-     * @param  callable|string|array $rule
+     * @param callable|string|array $rule
      *
      * @return bool
      */

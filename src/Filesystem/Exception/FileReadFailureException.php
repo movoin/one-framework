@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\LogicException;
 
 /**
- * 文件读取失败异常 (307)
+ * 文件读取失败异常 (1506)
  *
  * @since 0.2
  */
 class FileReadFailureException extends LogicException
 {
     /**
-     * 代码: 307
+     * 代码: 1506
      *
      * @var int
      */
-    protected $code = 307;
+    protected $code = 1506;
 
     /**
      * 构造

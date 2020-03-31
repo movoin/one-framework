@@ -15,7 +15,7 @@ namespace One\Validation\Rule;
 
 use One\Utility\Assert;
 use One\Validation\Rule\AbstractRule;
-use One\Validation\Exception\ValidationException;
+use One\Validation\Exception\ValidationInvalidArgumentException;
 
 /**
  * 规则：应用特定接口或继承自特定类
@@ -55,16 +55,16 @@ class InstanceOfRule extends AbstractRule
      * 校验规则
      *
      * @param array $attributes 校验数据
-     * @param string $name      校验规则名称
+     * @param string $name 校验规则名称
      * @param array $parameters 校验参数
      *
      * @return bool
-     * @throws \One\Validation\Exception\ValidationException
+     * @throws \One\Validation\Exception\ValidationInvalidArgumentException
      */
     public function validate(array $attributes, string $name, array $parameters = []): bool
     {
         if (! isset($parameters['of'])) {
-            throw new ValidationException('of 必须设置');
+            throw new ValidationInvalidArgumentException(static::getNames(), 'of');
         }
 
         if (Assert::instanceOfAny($attributes[$name], (array) $parameters['of'])) {

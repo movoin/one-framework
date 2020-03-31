@@ -23,6 +23,9 @@
       <exclude>
         <directory suffix=".php">src/Console</directory>
         <file>src/Utility/Helper/RegexHelper.php</file>
+        <file>src/Filesystem/Exception/DirectoryCreateFailureException.php</file>
+        <file>src/Filesystem/Exception/DirectoryUnreadableException.php</file>
+        <file>src/Filesystem/Exception/FileReadFailureException.php</file>
       </exclude>
     </whitelist>
   </filter>

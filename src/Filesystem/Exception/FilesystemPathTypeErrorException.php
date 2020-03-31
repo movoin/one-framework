@@ -16,18 +16,18 @@ namespace One\Filesystem\Exception;
 use One\Exception\TypeErrorException;
 
 /**
- * 文件系统路径类型错误异常 (311)
+ * 文件系统路径类型错误异常 (1510)
  *
  * @since 0.2
  */
 class FilesystemPathTypeErrorException extends TypeErrorException
 {
     /**
-     * 代码: 311
+     * 代码: 1510
      *
      * @var int
      */
-    protected $code = 311;
+    protected $code = 1510;
 
     /**
      * 构造

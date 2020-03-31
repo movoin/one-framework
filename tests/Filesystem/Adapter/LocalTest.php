@@ -162,53 +162,32 @@ class LocalTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Filesystem\Exception\FileException
+     * @dataProvider allExceptions
      */
-    public function testSetVisibilityException()
+    public function testExceptions($method, $attributes, $exception)
     {
-        $this->adapter->setVisibility('test.txt', 'public');
-    }
+        $this->expectException('\\One\\Filesystem\\Exception\\' . $exception);
 
-    /**
-     * @expectedException One\Filesystem\Exception\FileException
-     * @dataProvider fileExceptions
-     */
-    public function testFileExceptions($method, $attributes)
-    {
         call_user_func_array([$this->adapter, $method], $attributes);
     }
 
-    public function fileExceptions()
+    public function allExceptions()
     {
         return [
-            ['read', ['bad']],
-            ['readStream', ['bad']],
-            ['write', ['file', '']],
-            ['writeStream', ['file', '']],
-            ['update', ['bad', '']],
-            ['updateStream', ['bad', '']],
-            ['getMetaData', ['bad']],
-            ['getMimeType', ['bad']],
-            ['rename', ['bad', 'newbad']],
-            ['delete', ['bad']],
-            ['getVisibility', ['bad']],
-        ];
-    }
-
-    /**
-     * @expectedException One\Filesystem\Exception\DirectoryException
-     * @dataProvider dirExceptions
-     */
-    public function testDirectoryExceptions($method, $attributes)
-    {
-        call_user_func_array([$this->adapter, $method], $attributes);
-    }
-
-    public function dirExceptions()
-    {
-        return [
-            ['createDir', ['']],
-            ['deleteDir', ['bad']],
+            ['read', ['bad'], 'FileNotExistsException'],
+            ['readStream', ['bad'], 'FileNotExistsException'],
+            ['update', ['bad', 'text'], 'FileNotExistsException'],
+            ['updateStream', ['bad', 'text'], 'FileNotExistsException'],
+            ['getMetaData', ['bad'], 'FileNotExistsException'],
+            ['getMimeType', ['bad'], 'FileNotExistsException'],
+            ['rename', ['bad', 'bad'], 'FileNotExistsException'],
+            ['delete', ['bad'], 'FileNotExistsException'],
+            ['setVisibility', ['bad.txt', 'public'], 'FileNotExistsException'],
+            ['getVisibility', ['bad'], 'FileNotExistsException'],
+            ['write', ['file.txt', 'text'], 'FileExistsException'],
+            ['writeStream', ['file.txt', 'text'], 'FileExistsException'],
+            ['createDir', [''], 'DirectoryExistsException'],
+            ['deleteDir', ['bad'], 'DirectoryNotExistsException'],
         ];
     }
 }

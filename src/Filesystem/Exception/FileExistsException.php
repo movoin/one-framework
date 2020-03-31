@@ -16,16 +16,16 @@ namespace One\Filesystem\Exception;
 use One\Exception\NotExistsException;
 
 /**
- * 文件已存在异常类 (305)
+ * 文件已存在异常类 (1504)
  */
 class FileExistsException extends NotExistsException
 {
     /**
-     * 代码: 305
+     * 代码: 1504
      *
      * @var int
      */
-    protected $code = 305;
+    protected $code = 1504;
 
     /**
      * 构造

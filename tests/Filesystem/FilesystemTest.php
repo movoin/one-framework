@@ -144,55 +144,23 @@ class FilesystemTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException One\Filesystem\Exception\FilesystemException
-     * @dataProvider filesystemExceptions
+     * @dataProvider allExceptions
      */
-    public function testFilesystemExceptions($method, $attributes)
+    public function testExceptions($method, $attributes, $exception)
     {
+        $this->expectException('\\One\\Filesystem\\Exception\\' . $exception);
+
         call_user_func_array([$this->fs, $method], $attributes);
     }
 
-    public function filesystemExceptions()
+    public function allExceptions()
     {
         return [
-            ['exists', ['../file']],
-            ['read', ['../../../file']],
-            ['writeStream', ['test', '']],
-        ];
-    }
-
-    /**
-     * @expectedException One\Filesystem\Exception\FileException
-     * @dataProvider fileExceptions
-     */
-    public function testFileExceptions($method, $attributes)
-    {
-        call_user_func_array([$this->fs, $method], $attributes);
-    }
-
-    public function fileExceptions()
-    {
-        return [
-            ['read', ['bad']],
-            ['write', ['file', '']],
-        ];
-    }
-
-    /**
-     * @expectedException One\Filesystem\Exception\DirectoryException
-     * @dataProvider dirExceptions
-     */
-    public function testDirectoryExceptions($method, $attributes)
-    {
-        call_user_func_array([$this->fs, $method], $attributes);
-    }
-
-    public function dirExceptions()
-    {
-        return [
-            ['createDir', ['']],
-            ['deleteDir', ['']],
-            ['deleteDir', ['bad']],
+            ['writeStream', ['test', ''], 'RewindResourceTypeErrorException'],
+            ['exists', ['../file'], 'FilesystemPathOutOfRangeException'],
+            ['deleteDir', [''], 'DirectoryNotExistsException'],
+            ['read', ['bad'], 'FileNotExistsException'],
+            ['write', ['file', ''], 'FileExistsException'],
         ];
     }
 }
